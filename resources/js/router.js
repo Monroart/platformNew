@@ -10,6 +10,7 @@ import Profile from "./views/profile/Profile";
 import Login from "./views/auth/Login";
 import Courses from "./views/courses/Courses";
 import Homeworks from "./views/homeworks/Homeworks";
+import Compiler from "./views/compiler/Compiler";
 
 const routes = [
     {
@@ -33,6 +34,10 @@ const routes = [
         path: '/homeworks',
         component: Homeworks
     },
+    {
+        path: '/compile',
+        component: Compiler
+    }
 ];
 
 const router = new vueRouter({

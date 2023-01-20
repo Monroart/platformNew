@@ -13,6 +13,7 @@
                 <div class="bg-dark border rounded-3 pb-0 p-3 w-100">
                     <!-- Dashboard menu -->
                     <div class="list-group list-group-dark list-group-borderless">
+                        <router-link to="/compile"><a v-bind:class="{active : isActive.compile}" class="list-group-item"><i class="bi bi-ui-checks-grid fa-fw me-2"></i>Компилятор</a></router-link>
                         <router-link to="/"><a v-bind:class="{active : isActive.home}" class="list-group-item"><i class="bi bi-ui-checks-grid fa-fw me-2"></i>Показатели</a></router-link>
                         <router-link to="/courses"><a v-bind:class="{active : isActive.courses}" class="list-group-item"><i class="bi bi-card-checklist fa-fw me-2"></i>Мои курсы</a></router-link>
 <!--                        <a class="list-group-item" href="student-course-list.html"><i class="bi bi-basket fa-fw me-2"></i>My Courses</a>-->
@@ -65,7 +66,8 @@ export default {
                     home : true,
                     courses : false,
                     homeworks : false,
-                    profile : false
+                    profile : false,
+                    compile : false
                 }
             }
             else if(this.$route.path === '/courses'){
@@ -73,7 +75,8 @@ export default {
                     home : false,
                     courses : true,
                     homeworks : false,
-                    profile : false
+                    profile : false,
+                    compile : false
                 }
             }
             else if(this.$route.path === '/homeworks'){
@@ -81,7 +84,8 @@ export default {
                     home : false,
                     courses : false,
                     homeworks : true,
-                    profile : false
+                    profile : false,
+                    compile : false
                 }
             }
             else if(this.$route.path === '/profile'){
@@ -89,7 +93,17 @@ export default {
                     home : false,
                     courses : false,
                     homeworks : false,
-                    profile : true
+                    profile : true,
+                    compile : false
+                }
+            }
+            else if(this.$route.path === '/compile'){
+                return {
+                    home : false,
+                    courses : false,
+                    homeworks : false,
+                    profile : false,
+                    compile : true
                 }
             }
         }
