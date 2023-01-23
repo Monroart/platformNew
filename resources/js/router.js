@@ -49,7 +49,7 @@ router.beforeEach(( to, from, next) => {
 
     const token = localStorage.getItem('x_xsrf_token')
 
-    if(!token){
+    if(!token) {
         if(to.path === '/login'){
             return next()
         }
@@ -58,9 +58,12 @@ router.beforeEach(( to, from, next) => {
         }
     }
 
-    if(to.path === '/login' && token){
+    if(to.path === '/login' && token) {
         return next('/')
     }
+
+    store.dispatch('auth/login', false)
+
     next()
 })
 
