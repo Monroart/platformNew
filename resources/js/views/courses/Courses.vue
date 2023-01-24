@@ -1,6 +1,6 @@
 <template>
     <!-- Main content START -->
-    <div class="col-md-9">
+    <div v-if="courses" class="col-md-9">
 
         <!-- Course item START -->
         <div v-for="course in courses" class="card border mt-4">
@@ -44,12 +44,12 @@
                     <!-- Item -->
                     <div  class="accordion-item mb-3">
                         <h6 class="accordion-header font-base" id="heading-1">
-                            <a class="accordion-button fw-bold rounded collapsed d-block pe-4" href="#collapse-1" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
+                            <a @click="setAccordion(lesson.id)" class="accordion-button fw-bold rounded collapsed d-block pe-4" href="#collapse-1" data-bs-toggle="collapse" data-bs-target="#collapse-1" v-bind:aria-expanded="test" aria-controls="collapse-1">
                                 <span class="mb-0">Урок</span>
                                 <span class="small d-block mt-1">{{lesson.lesson_number}}</span>
                             </a>
                         </h6>
-                        <div class="accordion-collapse collapse show" aria-labelledby="heading-1" data-bs-parent="#accordionExample2">
+                        <div v-bind:class="{show : accordion_states[lesson.id]}" class="accordion-collapse collapse" aria-labelledby="false" data-bs-parent="#accordionExample2">
                             <div class="accordion-body mt-3">
                                 <div class="vstack gap-3">
 
@@ -526,22 +526,31 @@ export default {
     data(){
         return {
             courses: null,
-            accordion_states: []
+            accordion_states: {},
+            test: true
         }
     },
     methods:{
         getMyCourses(){
             axios.post('api/courses/getCourse').then(res =>{
                 this.courses = res.data.courses
-                for(let c = 0; c < this.courses.length; c++){
-                    for(let l = 0; l < this.courses[c].lessons; l++){
-                        this.accordion_states.push()
-                    }
-                }
+                this.courses.forEach((el1) => {
+                    el1.lessons.forEach((el2) => {
+                        this.$set(this.accordion_states, el2.id, false)
+                        // this.accordion_states[el2.id] = false
+                    })
+                })
+                // for(let c = 0; c < this.courses.length; c++){
+                //     this.accordion_states.push(this.courses.lessons.id);
+                // }
             });
         },
         getDays(days){
             return getDayOfWeek(days)
+        },
+        setAccordion(id){
+            this.test = false
+            this.$set(this.accordion_states, id, !this.accordion_states[id])
         }
     },
     filters: {
