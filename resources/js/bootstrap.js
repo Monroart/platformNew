@@ -18,6 +18,7 @@ window.axios.interceptors.response.use({}, err => {
         const token = localStorage.getItem('x_xsrf_token')
         if(token){
             localStorage.removeItem('x_xsrf_token')
+            localStorage.removeItem('vuex')
         }
         router.push('/login')
         return Promise.reject(err);
