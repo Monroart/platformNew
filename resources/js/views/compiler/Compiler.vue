@@ -9,7 +9,10 @@
 <!--         data-version-index="3">-->
 <!--    </div>-->
 <!--    </body>-->
-    <iframe src="https://trinket.io/embed/html/7bfc6f1c3d?runMode=autorun" width="100%" height="356" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
+<!--    <iframe src="https://trinket.io/embed/python/075a19522f" width="100%" height="356" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>-->
+    <code>
+        test
+    </code>
 </template>
 <!--<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>-->
 <script>

@@ -44,8 +44,8 @@
                     <!-- Item -->
                     <div  class="accordion-item mb-3">
                         <h6 class="accordion-header font-base" id="heading-1">
-                            <a @click="setAccordion(lesson.id)" class="accordion-button fw-bold rounded collapsed d-block pe-4" href="#collapse-1" data-bs-toggle="collapse" data-bs-target="#collapse-1" v-bind:aria-expanded="test" aria-controls="collapse-1">
-                                <span class="mb-0">Урок</span>
+                            <a @click="setAccordion(lesson.id)" class="accordion-button fw-bold rounded collapsed d-block pe-4" href="#collapse-1" data-bs-toggle="collapse" data-bs-target="#collapse-1" :aria-expanded="accordion_states[lesson.id]" aria-controls="collapse-1">
+                                <span class="mb-0">Урок {{ accordion_states[lesson.id] }}</span>
                                 <span class="small d-block mt-1">{{lesson.lesson_number}}</span>
                             </a>
                         </h6>
