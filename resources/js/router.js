@@ -10,6 +10,7 @@ import Profile from "./views/profile/Profile";
 import Login from "./views/auth/Login";
 import Courses from "./views/courses/Courses";
 import Homeworks from "./views/homeworks/Homeworks";
+import CourseView from "./views/courses/CourseView";
 
 const routes = [
     {
@@ -28,6 +29,12 @@ const routes = [
     {
         path: '/courses',
         component: Courses
+    },
+    {
+        path: '/course',
+        name: 'courseId',
+        props: routes => ({course_id: routes.query.course_id}),
+        component: CourseView,
     },
     {
         path: '/homeworks',
