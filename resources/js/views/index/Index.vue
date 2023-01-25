@@ -108,7 +108,7 @@
                                     </div>
                                     <div class="mb-0 ms-2">
                                         <!-- Title -->
-                                        <h6><a href="#">Building Scalable APIs with GraphQL</a></h6>
+                                        <h6><a href="#">Обучение Scratch: от S до h</a></h6>
                                         <!-- Info -->
                                         <div class="overflow-hidden">
                                             <h6 class="mb-0 text-end">85%</h6>
@@ -144,7 +144,7 @@
                                     </div>
                                     <div class="mb-0 ms-2">
                                         <!-- Title -->
-                                        <h6><a href="#">Create a Design System in Figma</a></h6>
+                                        <h6><a href="#">Создаём виртуального хомяка с помощью HTML и JavaScript</a></h6>
                                         <!-- Info -->
                                         <div class="overflow-hidden">
                                             <h6 class="mb-0 text-end">100%</h6>
@@ -181,7 +181,7 @@
                                     </div>
                                     <div class="mb-0 ms-2">
                                         <!-- Title -->
-                                        <h6><a href="#">The Complete Web Development in python</a></h6>
+                                        <h6><a href="#">Веб-разработка на Python – с нуля до создания веб-шопа за 2 недели</a></h6>
                                         <!-- Info -->
                                         <div class="overflow-hidden">
                                             <h6 class="mb-0 text-end">60%</h6>
@@ -217,7 +217,7 @@
                                     </div>
                                     <div class="mb-0 ms-2">
                                         <!-- Title -->
-                                        <h6><a href="#">Digital Marketing Masterclass</a></h6>
+                                        <h6><a href="#">Вебинар по Python: как научиться проводить вебинары</a></h6>
                                         <!-- Info -->
                                         <div class="overflow-hidden">
                                             <h6 class="mb-0 text-end">40%</h6>
@@ -252,7 +252,7 @@
                                     </div>
                                     <div class="mb-0 ms-2">
                                         <!-- Title -->
-                                        <h6><a href="#">Graphic Design Masterclass</a></h6>
+                                        <h6><a href="#">Minecraft; создаём свой Industrial Craft 2 на Java</a></h6>
                                         <!-- Info -->
                                         <div class="overflow-hidden">
                                             <h6 class="mb-0 text-end">90%</h6>
