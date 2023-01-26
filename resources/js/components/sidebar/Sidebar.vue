@@ -50,10 +50,10 @@ export default {
             signOut: "auth/logout"
         }),
         logout(){
+            this.signOut()
             axios.post('/logout')
                 .then(res => {
                     localStorage.removeItem('x_xsrf_token')
-                    this.signOut()
                 });
         }
     },
@@ -105,6 +105,14 @@ export default {
                     homeworks : false,
                     profile : false,
                     compile : true
+                }
+            }
+            else{
+                return {
+                    home : false,
+                    courses : false,
+                    homeworks : false,
+                    profile : false
                 }
             }
         }
