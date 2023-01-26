@@ -1,9 +1,8 @@
 <template>
-    <iframe allowtransparency="true" width="485" height="402" src="//scratch.mit.edu/projects/PROJECT-ID-HERE/embed?autostart=false" frameborder="0" allowfullscreen> </iframe>
+<!--    Раньше тут были Скрэтч, ВС код и Роблокс, а теперь тут надо вставить красивое оформление на будущее для компилятора-->
 </template>
-<script>
 
-</script>
+<script></script>
 
 <style scoped>
 
