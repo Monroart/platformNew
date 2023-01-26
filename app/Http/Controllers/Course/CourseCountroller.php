@@ -33,11 +33,11 @@ class CourseCountroller extends Controller
     public function getCourseLessons(Request $request){
         $course_id = $request->input('course_id');
         $lessons = Lesson::query()
-            ->select('lessons.*', 'subject_materials.*', 'home_works.text', 'home_works.created_at as home_work_date')
+            ->select('lessons.*','lessons.id as lesson_id', 'subject_materials.*', 'home_works.text', 'home_works.created_at as home_work_date')
             ->leftJoin('subject_materials', 'lessons.subject_material_id', '=', 'subject_materials.id')
             ->leftJoin('home_works', 'home_works.id', '=','lessons.homework_id')
             ->where('course_id', '=', $course_id)
-            ->orderBy('lessons.date_start', 'desc')
+            ->orderBy('lessons.date', 'desc')
             ->get();
         return ['lessons' => $lessons];
     }

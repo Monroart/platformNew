@@ -4,19 +4,19 @@
             <div class="card-body">
 
                 <!-- Title -->
-                <h5>Курс {{course_id}}</h5>
+                <h5>Курс {{course_name}}</h5>
 
                 <!-- Accordion START -->
-                <div v-for="lesson in lessons" class="accordion accordion-icon accordion-bg-light" :id="'accordionExample' + lesson.id">
+                <div v-for="lesson in lessons" class="accordion accordion-icon accordion-bg-light" :id="'accordionExample' + lesson.lesson_id">
                     <!-- Item -->
                     <div  class="accordion-item mb-3">
-                        <h6 class="accordion-header font-base" :id="'heading-' + lesson.id">
-                            <a class="accordion-button fw-bold rounded d-block pe-4" data-bs-toggle="collapse" :data-bs-target="'#collapse-' + lesson.id" aria-expanded="false" :aria-controls="'collapse-' + lesson.id">
+                        <h6 class="accordion-header font-base" :id="'heading-' + lesson.lesson_id">
+                            <a class="accordion-button fw-bold rounded d-block pe-4" data-bs-toggle="collapse" :data-bs-target="'#collapse-' + lesson.lesson_id" aria-expanded="false" :aria-controls="'collapse-' + lesson.lesson_id">
                                 <span class="mb-0">Урок {{lesson.lesson_number}}</span>
                                 <span class="small d-block mt-1">{{lesson.name}}</span>
                             </a>
                         </h6>
-                        <div :id="'collapse-' + lesson.id" class="accordion-collapse collapse" :aria-labelledby="'heading-' + lesson.id" data-bs-parent="#accordionExample2">
+                        <div :id="'collapse-' + lesson.lesson_id" class="accordion-collapse collapse" :aria-labelledby="'heading-' + lesson.lesson_id" data-bs-parent="#accordionExample2">
                             <div class="accordion-body mt-3">
                                 <div class="vstack gap-3">
 
@@ -39,11 +39,23 @@
 <!--                                                <span class="d-inline-block ms-0 mb-2 h6 fw-light w-150px w-sm-200px">{{lesson.subject_material}}</span>-->
                                                 <p>{{lesson.subject_material}}</p>
                                             </div>
+                                            <div v-if="lesson.substitute_teacher_id" data-app>
+                                                <v-tooltip right>
+                                                    <template v-slot:activator="{ on, attrs }">
+                                                        <i
+                                                            class="fas fa-user-graduate text-blue"
+                                                            v-bind="attrs"
+                                                            v-on="on"
+                                                        ></i>
+                                                    </template>
+                                                    <span>Замена: {{$store.getters["users/getById"](lesson.substitute_teacher_id) ? $store.getters["users/getById"](course.substitute_teacher_id).name : ''}}</span>
+                                                </v-tooltip>
+                                            </div>
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <!-- Add note button -->
                                             <div>
-                                                <a class="btn btn-xs btn-warning mb-0 me-2" data-bs-toggle="collapse" href="#addnote-1" role="button" aria-expanded="false" aria-controls="addnote-1">
+                                                <a class="btn btn-xs btn-warning mb-0 me-2" data-bs-toggle="collapse" :href="'#addnote-' + lesson.lesson_id" role="button" aria-expanded="false" :aria-controls="'addnote-' + lesson.lesson_id">
                                                     <i class="bi fa-fw bi-pencil-square me-2"></i>Домашнее задание
                                                 </a>
                                                 <a :href="lesson.lesson_recording" class="btn btn-xs btn-dark mb-0 me-2" target="_blank"><i class="fas fa-play me-2"></i>Запись урока</a>
@@ -55,15 +67,23 @@
 
 
                                         <!-- Notes START -->
-                                        <div class="collapse" id="addnote-1">
+                                        <div class="collapse" :id="'addnote-' + lesson.lesson_id">
                                             <div class="card card-body p-0 mt-2">
-
                                                 <!-- Note item -->
                                                 <div class="d-flex justify-content-between bg-light rounded-2 p-2">
                                                     <!-- Content -->
                                                     <div class="d-flex align-items-center">
                                                         <span v-if="lesson.text" class="small d-block mt-1">{{lesson.text}}</span>
                                                         <span v-else class="small d-block mt-1">Преподаватель еще не прикрепил домашнее задание</span>
+                                                    </div>
+                                                    <div v-if="lesson.text" data-app>
+                                                        <v-file-input
+                                                            counter
+                                                            hide-input
+                                                            multiple
+                                                            show-size
+                                                            truncate-length="17"
+                                                        ></v-file-input>
                                                     </div>
                                                 </div>
                                             </div>
@@ -156,7 +176,7 @@ import moment from "moment";
 
 export default {
     name: "CourseView",
-    props: ['course_id'],
+    props: ['course_id', 'course_name'],
     data(){
         return {
             lessons: null
