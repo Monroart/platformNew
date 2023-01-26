@@ -40,6 +40,10 @@ const routes = [
         path: '/homeworks',
         component: Homeworks
     },
+    {
+        path: '/compile',
+        component: Compiler
+    }
 ];
 
 const router = new vueRouter({

@@ -67,23 +67,6 @@
 
 <!--            <div class="card-body">-->
 
-<!--                &lt;!&ndash; Title &ndash;&gt;-->
-<!--                <h5>Course Curriculum</h5>-->
-
-<!--                &lt;!&ndash; Accordion START &ndash;&gt;-->
-<!--                <div class="accordion accordion-icon accordion-bg-light" id="accordionExample4">-->
-<!--                    &lt;!&ndash; Item &ndash;&gt;-->
-<!--                    <div class="accordion-item mb-3">-->
-<!--                        <h6 class="accordion-header font-base" id="heading-1-1">-->
-<!--                            <a class="accordion-button fw-bold rounded collapsed d-block pe-4" href="#collapse-1-1" data-bs-toggle="collapse" data-bs-target="#collapse-1-1" aria-expanded="false" aria-controls="collapse-1-1">-->
-<!--                                <span class="mb-0">Introduction of Sketch</span>-->
-<!--                                <span class="small d-block mt-1">(3 Lectures)</span>-->
-<!--                            </a>-->
-<!--                        </h6>-->
-<!--                        <div id="collapse-1-1" class="accordion-collapse collapse" aria-labelledby="heading-1-1" data-bs-parent="#accordionExample4">-->
-<!--                            <div class="accordion-body mt-3">-->
-<!--                                <div class="vstack gap-3">-->
-
 <!--                                    &lt;!&ndash; Progress bar &ndash;&gt;-->
 <!--                                    <div class="overflow-hidden">-->
 <!--                                        <div class="d-flex justify-content-between">-->
