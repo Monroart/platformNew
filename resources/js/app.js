@@ -36,8 +36,10 @@ import Vuetify from './plugins/vuetify'
 import VueMoment from 'vue-moment'
 import moment from 'moment'
 import VueGoodTablePlugin from 'vue-good-table';
+import VueComp from '@vue/composition-api'
 Vue.use(VueMoment)
 Vue.use(VueGoodTablePlugin)
+Vue.use(VueComp)
 
 
 const app = new Vue({

@@ -13,7 +13,8 @@
                 <div class="bg-dark border rounded-3 pb-0 p-3 w-100">
                     <!-- Dashboard menu -->
                     <div class="list-group list-group-dark list-group-borderless">
-                        <router-link to="/slots"><a v-bind:class="{active : isActive.compile}" class="list-group-item"><i class="bi bi-ui-checks-grid fa-fw me-2"></i>Слоты(часть из админки)</a></router-link>
+                        <router-link to="/slots"><a v-bind:class="{active : isActive.compile}" class="list-group-item"><i class="bi bi-ui-checks-grid fa-fw me-2"></i>Слоты(админка)</a></router-link>
+                        <router-link to="/myslots"><a v-bind:class="{active : isActive.compile}" class="list-group-item"><i class="bi bi-ui-checks-grid fa-fw me-2"></i>Мои слоты</a></router-link>
                         <router-link to="/compile"><a v-bind:class="{active : isActive.compile}" class="list-group-item"><i class="bi bi-ui-checks-grid fa-fw me-2"></i>Компилятор</a></router-link>
                         <router-link to="/"><a v-bind:class="{active : isActive.home}" class="list-group-item"><i class="bi bi-ui-checks-grid fa-fw me-2"></i>Показатели</a></router-link>
                         <router-link to="/courses"><a v-bind:class="{active : isActive.courses}" class="list-group-item"><i class="bi bi-card-checklist fa-fw me-2"></i>Мои курсы</a></router-link>
