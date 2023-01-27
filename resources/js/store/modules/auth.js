@@ -40,6 +40,7 @@ export default {
             commit('SET_TOKEN','')
             commit('SET_USER',{})
             commit('SET_AUTHENTICATED',false)
+            localStorage.removeItem('x_xsrf_token')
             router.push('/login');
         }
     }

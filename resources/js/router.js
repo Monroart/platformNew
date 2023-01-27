@@ -11,6 +11,7 @@ import Login from "./views/auth/Login";
 import Courses from "./views/courses/Courses";
 import Homeworks from "./views/homeworks/Homeworks";
 import CourseView from "./views/courses/CourseView";
+import StudentHomework from "./components/homeworks/StudentHomework";
 
 const routes = [
     {
@@ -35,6 +36,12 @@ const routes = [
         name: 'courseId',
         props: routes => ({course_id: routes.query.course_id, course_name: routes.query.course_name}),
         component: CourseView,
+    },
+    {
+        path: '/studenthomeworks',
+        name: 'studenthomeworks',
+        props: routes => ({lesson_id: routes.query.lesson_id}),
+        component: StudentHomework,
     },
     {
         path: '/homeworks',
@@ -64,7 +71,9 @@ router.beforeEach(( to, from, next) => {
         return next('/')
     }
 
-    store.dispatch('auth/login', false)
+    if(token) {
+        store.dispatch('auth/login', false)
+    }
 
     next()
 })
