@@ -51,8 +51,18 @@
                                         <label for="exampleInputEmail1" class="form-label">Логин</label>
                                         <div class="input-group input-group-lg">
                                             <span class="input-group-text bg-light rounded-start border-0 text-secondary px-3"><i class="bi bi-envelope-fill"></i></span>
-                                            <input v-model="phone" type="tel" class="form-control border-0 bg-light rounded-end ps-1" placeholder="Телефон" id="exampleInputEmail1">
+                                            <input v-model.trim="phone"
+                                                   type="tel"
+                                                   :class="{invalid: $v.phone.$dirty && !$v.phone.required}"
+                                                   class="form-control border-0 bg-light rounded-end ps-1"
+                                                   placeholder="Телефон"
+                                                   id="exampleInputEmail1">
                                         </div>
+                                        <span class="text-danger"
+                                               v-if="$v.phone.$dirty && !$v.phone.required"
+                                        >
+                                            Введите номер телефона
+                                        </span>
                                     </div>
                                     <!-- Password -->
                                     <div class="mb-4">
@@ -96,6 +106,7 @@
 <script>
 
 import {mapActions} from 'vuex'
+import {required,} from 'vuelidate/lib/validators'
 export default {
     name: "Login",
     data(){
@@ -105,6 +116,10 @@ export default {
             password: '',
             remember: true,
         }
+    },
+    validations:{
+        phone: {required},
+        password: {required}
     },
     watch:{
         remember(el){
@@ -117,25 +132,30 @@ export default {
             signIn: "auth/login"
         }),
         login(){
-            axios.get('/sanctum/csrf-cookie').then(response => {
-                axios.post('/login',{
-                    phone: this.phone,
-                    password: this.password,
-                    remember: this.remember
-                    //comment
-                }).then(res => {
-                    localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN'])
-                    this.signIn()
-                    this.$store.commit('auth/SET_TOKEN', res.config.headers['X-XSRF-TOKEN'])
-                    this.$router.push('/');
-                }).catch(err => {
-                    console.log(err.response)
+            if(this.$v.$invalid){
+                this.$v.$touch()
+                return
+            }else{
+                axios.get('/sanctum/csrf-cookie').then(response => {
+                    axios.post('/login',{
+                        phone: this.phone,
+                        password: this.password,
+                        remember: this.remember
+                        //comment
+                    }).then(res => {
+                        localStorage.setItem('x_xsrf_token', res.config.headers['X-XSRF-TOKEN'])
+                        this.signIn()
+                        this.$store.commit('auth/SET_TOKEN', res.config.headers['X-XSRF-TOKEN'])
+                        this.$router.push('/');
+                    }).catch(err => {
+                        console.log(err.response)
+                    })
                 })
-            })
 
-            this.$router.replace({
-                name: 'Index'
-            })
+                this.$router.replace({
+                    name: 'Index'
+                })
+            }
         }
     }
 }
