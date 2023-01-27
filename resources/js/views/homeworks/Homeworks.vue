@@ -2,7 +2,7 @@
     <!-- Main content START -->
     <div class="col-md-9">
         <!-- Student review START -->
-        <div class="card border bg-transparent rounded-3" v-if="$store.getters['auth/user'].role_id === 2">
+        <div class="card border bg-transparent rounded-3" v-if="$store.getters['auth/user'].role_id === 1">
             <!-- Header START -->
             <div class="card-header bg-transparent border-bottom">
                 <div class="row justify-content-between align-middle">
@@ -101,7 +101,7 @@
 
 
         <!-- Card item START -->
-        <div class="col-lg-10 col-xxl-6" v-if="$store.getters['auth/user'].role_id === 1">
+        <div class="col-lg-10 col-xxl-6" v-if="$store.getters['auth/user'].role_id === 2">
             <div class="card rounded overflow-hidden shadow">
                 <div class="row g-0">
                     <!-- Image -->
@@ -150,6 +150,16 @@ export default {
 
         }
     },
+
+    methods: {
+        loadCourses() {
+            axios.post('api/courses/getCourse')
+        }
+    },
+
+    mounted() {
+        this.loadCourses()
+    }
 }
 </script>
 
