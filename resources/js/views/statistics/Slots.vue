@@ -3,8 +3,14 @@
         <tr v-for="row in dateandtime" :key="row.rows">
             <td  v-for="item in row" style="border: 1px solid #ccc;width: 100px;height: 40px" :key="item.cols">
 
-                <div v-if="item.message===currentclasstime.dateandtime">
-                    <div style="text-align:center;line-height:40px;background-color: yellowgreen;width: 140px;height: 30px;font-size: 10px;font-weight: bold" >{{item.message}}(Здесь был Идрис)</div>
+                <div v-if="item.coursename!=='' && item.remark==='w'">
+                    <div style="text-align:center;line-height:40px;background-color: yellowgreen;width: 140px;height: 30px;font-size: 10px;font-weight: bold" >{{item.coursename}}</div>
+                </div>
+                <div v-if="item.coursename!=='' && item.remark==='w'">
+                    <div style="text-align:center;line-height:40px;background-color: yellow;width: 140px;height: 30px;font-size: 10px;font-weight: bold" >{{item.teachername}}</div>
+                </div>
+                <div v-if="item.coursename!=='' && item.remark==='w'">
+                    <div style="text-align:center;line-height:40px;background-color: lightgoldenrodyellow;width: 140px;height: 30px;font-size: 10px;font-weight: bold" >{{item.message}}</div>
                 </div>
 
 
@@ -19,7 +25,7 @@
 
 
                 <div v-else-if="row.rows!==1&&row.rows!==0&&item.cols===0">
-                    <div style="text-align:center;line-height:40px;background-color: #ccc;width: 115px;height: 70px;font-size: 15px;font-weight: bold" >{{item.message}}</div>
+                    <div style="text-align:center;line-height:40px;background-color: #ccc;width: 140px;height: 90px;font-size: 15px;font-weight: bold" >{{item.message}}</div>
                 </div>
 
 
@@ -63,7 +69,7 @@ export default {
                     data.dateandtime[i][j]['coursename'] = ""
                     data.dateandtime[i][j]['teachername'] = ""
                     data.dateandtime[i][j]['location'] = ""
-                    data.dateandtime[i][j]['remark'] = ""
+                    data.dateandtime[i][j]['remark'] = 'w'
                 }
             }
             data.dateandtime[1][1]['message'] = "Понедельник"
@@ -99,29 +105,28 @@ export default {
             data.dateandtime[25][0]['message'] = "(19:30-20:00)"
             data.dateandtime[26][0]['message'] = "(20:00-20:30)"
             data.dateandtime[27][0]['message'] = "(20:30-21:00)"
-            data.dateandtime[2][1]['message'] = "Слот переполнен"
-            data.dateandtime[2][2]['coursename'] = "Слот переполнен"
-            data.dateandtime[2][3]['teachername'] = "Слот переполнен"
-            data.dateandtime[2][4]['location'] = "Слот переполнен"
-            data.dateandtime[2][5]['remark'] = "Слот переполнен"
+            data.dateandtime[2][1]['message'] = "Слот занят"
+            data.dateandtime[2][1]['coursename'] = "Группа 23"
+            data.dateandtime[2][1]['teachername'] = "Идрис"
             let current = new Date()
-            let month1 = (current.getMonth() + 1) < 10 ? '0' + (current.getMonth() + 1) : current.getMonth() + 1;//获取当前月份
-            let day1 = current.getDate() < 10 ? '0' + current.getDate() : current.getDate();//获取当前日份
+            //Тут механизм отображения слотов для текущего дня, пока оставил, но сейчас это не используется
+            let month1 = (current.getMonth() + 1) < 10 ? '0' + (current.getMonth() + 1) : current.getMonth() + 1;//Тут мы получаем текущий месяц
+            let day1 = current.getDate() < 10 ? '0' + current.getDate() : current.getDate();//Тут получаем сегодняшний день
             data.currentclasstime.dateandtime = month1 + "-" + day1
-            let date = new Date();//获取当前时间
-            date.setMonth(9 - 1)//设置当前月份为9月份
+            let date = new Date();//Тут текущее время
+            date.setMonth(9 - 1)//Тут установка текущего месяца
             for (let i = 1; i <= 7; i++) {
-                date.setDate(i)//设置第九月份第一天
-                let year = date.getFullYear()//获取当前年份
-                let month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;//获取当前月份
-                let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();//获取当前日份
-                if (getweekday(year + "-" + month + "-" + day) === "Понедельник")//如果当前日期是星期一
+                date.setDate(i)//Назначение первого дня текущего месяца
+                let year = date.getFullYear()//Получаем нынешний год
+                let month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;//Получаем текущий месяц
+                let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();//День
+                if (getweekday(year + "-" + month + "-" + day) === "Понедельник")//Если сегодня понедельник
                 {
                     data.currentclasstime.data = year + "-" + month + "-" + day
-                    for (let j = 0; j <= 6; j++)//遍历0到六  实际就是星期一到星期六
+                    for (let j = 0; j <= 6; j++)//Пробегаемся с понедельника по субботу
                     {
-                        if (j !==0)//当前是星期一 日份不用加1
-                            date.setDate(date.getDate() + 1)//日份加一 直到星期日为结束
+                        if (j !==0)//У нас стоит понедельник и воскресенье
+                            date.setDate(date.getDate() + 1)//пока воскресенье не закончится
                         year = date.getFullYear()
                         month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
                         day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
@@ -143,7 +148,6 @@ export default {
             data.message=  "Current Week: Week"+data.currentclasstime.time+","+data.currentclasstime.data
         }
 
-// 计算指定时间是星期几
         function getweekday(date){
             // date例如:'2022-03-05'
             var weekArray = ["Понедельник","Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
@@ -154,12 +158,11 @@ export default {
 
         const thisweekfuntion = () => {
 
-            while(data.currentclasstime.time!==1)//回到第一周
+            while(data.currentclasstime.time!==1)//возврат к первой неделе
             {
                 lastweekfuntion()
             }
             data.currentclasstime.date.setDate(data.currentclasstime.date.getDate()-7)
-            console.log("当前日s为",data.currentclasstime.date.getDate())
             data.currentclasstime.time=0
             let current=new Date()
             let fortime=new Date()
@@ -167,7 +170,6 @@ export default {
             {
                 fortime.setMonth(data.currentclasstime.date.getMonth())
                 fortime.setDate(data.currentclasstime.date.getDate())
-                console.log("当前开始日",fortime.getDate())
                 for(let j=0;j<=6;j++) {
                     if (j !==0)
                         fortime.setDate(fortime.getDate() + 1)
@@ -191,15 +193,14 @@ export default {
             date.setMonth(data.currentclasstime.date.getMonth())
             date.setDate(data.currentclasstime.date.getDate())
             date.setDate(date.getDate()-14)
-            console.log("日份为",date.getDate())
-            let year=date.getFullYear()//获取当前年份
-            let month = (date.getMonth()+1)<10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;//获取当前月份
-            let day = date.getDate()<10 ? '0'+date.getDate() : date.getDate();//获取当前日份
+            let year=date.getFullYear()//Нынешний год
+            let month = (date.getMonth()+1)<10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;//Получить текущий месяц
+            let day = date.getDate()<10 ? '0'+date.getDate() : date.getDate();//День
             data.currentclasstime.data=year+"-"+month+"-"+day
-            for(let j=0;j<=6;j++)//遍历0到六  实际就是星期一到星期六
+            for(let j=0;j<=6;j++)//Короче, тут то же самое, что выше, комментарии оставлять не буду
             {
-                if(j!==0)//当前是星期一 日份不用加1
-                    date.setDate(date.getDate()+1)//日份加一 直到星期日为结束  date改变会引起data.currentclasstime.date改变
+                if(j!==0)
+                    date.setDate(date.getDate()+1)
                 year=date.getFullYear()
                 month = (date.getMonth()+1)<10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;
                 day = date.getDate()<10 ? '0'+date.getDate() : date.getDate();
@@ -212,7 +213,7 @@ export default {
                 }
             }
             data.currentclasstime.time-=1
-            data.message=  "Current Week: Week"+data.currentclasstime.time+","+data.currentclasstime.data
+            data.message=  "Нынешняя неделя:"+data.currentclasstime.time+","+data.currentclasstime.data
         }
 
         const nextweekfuntion=()=>
@@ -224,16 +225,15 @@ export default {
             let date=new Date()
             date.setMonth(data.currentclasstime.date.getMonth())
             date.setDate(data.currentclasstime.date.getDate())
-            console.log("日份为",date.getDate())
-            let year=date.getFullYear()//获取当前年份
-            let month = (date.getMonth()+1)<10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;//获取当前月份
-            let day = date.getDate()<10 ? '0'+date.getDate() : date.getDate();//获取当前日份
+            let year=date.getFullYear()
+            let month = (date.getMonth()+1)<10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;
+            let day = date.getDate()<10 ? '0'+date.getDate() : date.getDate();
             data.currentclasstime.date=date
             data.currentclasstime.data=year+"-"+month+"-"+day
-            for(let j=0;j<=6;j++)//遍历0到六  实际就是星期一到星期六
+            for(let j=0;j<=6;j++)
             {
-                if(j!==0)//当前是星期一 日份不用加1
-                    date.setDate(date.getDate()+1)//日份加一 直到星期日为结束
+                if(j!==0)
+                    date.setDate(date.getDate()+1)
                 year=date.getFullYear()
                 month = (date.getMonth()+1)<10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;
                 day = date.getDate()<10 ? '0'+date.getDate() : date.getDate();
@@ -246,12 +246,13 @@ export default {
                 }
             }
             data.currentclasstime.time+=1
-            data.message=  "Current Week: Week"+data.currentclasstime.time+","+data.currentclasstime.data
+            data.message=  "Нынешняя неделя:"+data.currentclasstime.time+","+data.currentclasstime.data
 
         }
 
 //помогите я запутался
-
+//прошёл день, помощь не нужна, я всё поправил
+//функции эти я вырезал, но колонку пустую оставил, когда будем делать админ панель, если это надо будет, то
         return{
             thisweekfuntion,
             lastweekfuntion,
@@ -260,9 +261,16 @@ export default {
             ...toRefs(data),
         }
         //
-    }
-}
+    },
 
+    methods: {
+
+        loadAllSlots: function(){
+            axios.post('/api/slots/getAll')
+        }
+    }
+
+}
 
 
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <SpringCalendar year="2023" color="#1a3ca3" :events="events" locale="ru"/>
+        <SpringCalendar year="2023" color="#1a3ca3" :events="events" locale="tet"/>
     </div>
 </template>
 
