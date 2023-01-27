@@ -14,6 +14,7 @@ import Compiler from "./views/compiler/Compiler";
 import Slots from "./views/statistics/Slots";
 import CourseView from "./views/courses/CourseView";
 import StudentHomework from "./components/homeworks/StudentHomework";
+import TeachersSlots from "./views/teachers/TeachersSlots";
 
 const routes = [
     {
