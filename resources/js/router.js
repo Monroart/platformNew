@@ -11,7 +11,6 @@ import Login from "./views/auth/Login";
 import Courses from "./views/courses/Courses";
 import Homeworks from "./views/homeworks/Homeworks";
 import Compiler from "./views/compiler/Compiler";
-import Slots from "./views/statistics/Slots";
 import CourseView from "./views/courses/CourseView";
 import StudentHomework from "./components/homeworks/StudentHomework";
 import TeachersSlots from "./views/teachers/TeachersSlots";
@@ -53,10 +52,6 @@ const routes = [
     {
         path: '/compile',
         component: Compiler
-    },
-    {
-        path: '/slots',
-        component: Slots
     },
     {
         path: '/myslots',
