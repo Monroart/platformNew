@@ -26,7 +26,7 @@
                                 </ul>
 
                                 <!-- button -->
-                                <router-link :to="{ name: 'courseId', query: {course_id: course.id, course_name: course.name}}"><a class="btn btn-primary-soft btn-sm mb-0">Посмотреть</a></router-link>
+                                <router-link :to="{ name: 'courseId', query: {course_id: course.id, course_name: course.name, course_length: course.course_length}}"><a class="btn btn-primary-soft btn-sm mb-0">Посмотреть</a></router-link>
                             </div>
                         </div>
                     </div>
@@ -44,6 +44,7 @@ import moment from 'moment'
 import {getDayOfWeek} from "../../utils";
 export default {
     name: "Courses",
+
     data(){
         return {
             courses: null,

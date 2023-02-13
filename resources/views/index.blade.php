@@ -3,6 +3,8 @@
     <template>
         <div id="app">
             <main>
+{{--                <Spinner class="loader" name="pacman" color="blue"></Spinner>--}}
+                <loader :visible = "isLoading"></loader>
                 <header-main></header-main>
                 <section class="pt-0">
                     <div class="container">
@@ -17,5 +19,7 @@
     </template>
 @endsection
 <script>
-
 </script>
+<style>
+</style>
+

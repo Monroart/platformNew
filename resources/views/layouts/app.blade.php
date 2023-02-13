@@ -17,8 +17,8 @@
         @yield('content')
     </main>
 </div>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+{{--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>--}}
 
 <script type="module" src="{{ asset('js/app.js') }}"></script>
 <script type="module" src="{{ asset('js/aos.js') }}"></script>
