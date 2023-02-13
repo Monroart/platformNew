@@ -4,6 +4,9 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+
+import {mapState} from "vuex";
+
 require('./bootstrap');
 
 window.Vue = require('vue').default;
@@ -22,6 +25,7 @@ window.Vue = require('vue').default;
 
 Vue.component('sidebar', require('./components/sidebar/Sidebar.vue').default)
 Vue.component('header-main', require('./components/header/HeaderMain.vue').default)
+Vue.component('loader', require('./components/loader/MyLoader.vue').default)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -36,18 +40,22 @@ import Vuetify from './plugins/vuetify'
 import VueMoment from 'vue-moment'
 import moment from 'moment'
 import VueGoodTablePlugin from 'vue-good-table';
-import {Vuelidate} from "vuelidate";
 
-Vue.use(Vuelidate)
+
 Vue.use(VueMoment)
 Vue.use(VueGoodTablePlugin)
 
 
+axios.defaults.showLoader = true;
 const app = new Vue({
     el: '#app',
     vuetify: Vuetify,
     router,
     axios,
     store,
-    moment: moment
+    moment: moment,
+    computed: {
+        ...mapState('loading', ['isLoading'])
+    }
 });
+

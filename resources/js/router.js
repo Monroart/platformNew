@@ -36,7 +36,7 @@ const routes = [
     {
         path: '/course',
         name: 'courseId',
-        props: routes => ({course_id: routes.query.course_id, course_name: routes.query.course_name}),
+        props: routes => ({course_id: routes.query.course_id, course_name: routes.query.course_name, course_length: routes.query.course_length}),
         component: CourseView,
     },
     {

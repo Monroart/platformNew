@@ -36,11 +36,11 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <!-- Add note button -->
                                 <div>
-                                    <a v-if="lesson.homework_id" class="btn btn-xs btn-warning mb-0 me-2" data-bs-toggle="collapse" :href="'#addnote-' + lesson.lesson_id" role="button" aria-expanded="false" :aria-controls="'addnote-' + lesson.lesson_id">
-                                        <i class="bi fa-fw bi-pencil-square me-2"></i>Домашнее задание
-                                    </a>
-                                    <a :href="lesson.lesson_recording" class="btn btn-xs btn-dark mb-0 me-2" target="_blank"><i class="fas fa-play me-2"></i>Запись урока</a>
-                                    <a :href="lesson.material_link" class="btn btn-xs btn-dark mb-0 me-2" target="_blank"><i class="fas fa-info me-2"></i>Материал урока</a>
+                                    <button v-if="lesson.homework_id" class="btn btn-xs btn-primary mb-0 me-2" data-bs-toggle="collapse" :href="'#addnote-' + lesson.lesson_id" aria-expanded="false" :aria-controls="'addnote-' + lesson.lesson_id">
+                                        <i class="fas fa-briefcase me-2"></i>Домашнее задание
+                                    </button>
+                                    <a :href="lesson.lesson_recording" class="btn btn-xs btn-light mb-0 me-2" target="_blank"><i class="fas fa-play me-2"></i>Запись урока</a>
+                                    <a :href="lesson.material_link" class="btn btn-xs btn-light mb-0 me-2" target="_blank"><i class="fas fa-info me-2"></i>Материал урока</a>
                                 </div>
                                 <!--                                            <p class="mb-0">{{lesson.date | momentStart}}</p>-->
                                 <span class="badge bg-dark me-2">{{lesson.date | momentStart}}</span>
@@ -49,21 +49,23 @@
 
                             <!-- Notes START -->
                             <div v-if="lesson.homework_id" class="collapse" :id="'addnote-' + lesson.lesson_id">
-                                <div class="card card-body p-0 mt-3">
+                                <hr class="mb-0">
+                                <div class="card card-body p-0 mt-2">
                                     <!-- Note item -->
                                     <div class="d-flex justify-content-between bg-light rounded-2 p-2">
                                         <!-- Content -->
                                         <div class="d-flex align-items-center">
                                             <span v-if="lesson.text" class="small d-block mt-1">{{lesson.text}}</span>
                                         </div>
+
+                                        <div class="d-flex mt-1">
+                                            <router-link :to="{ name: 'studenthomeworks', query: {lesson_id: lesson.lesson_id}}"><button class="btn btn-xs btn-primary mb-0"><i class="bi fa-fw bi-pencil-square me-2"></i>Прикрепить дз</button></router-link>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- Notes END -->
 
-                            <router-link :to="{ name: 'studenthomeworks', query: {lesson_id: lesson.lesson_id}}"><a class="btn btn-primary-soft btn-sm mb-0">Прикрепить дз</a></router-link>
-
-                            <!--                                        <hr class="mb-0">-->
                         </div>
                     </div>
                 </div>

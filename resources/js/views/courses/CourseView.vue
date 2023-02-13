@@ -1,20 +1,24 @@
 <template>
     <div class="col-md-9">
+        <v-app
+               id="inspire">
         <div class="card border mt-0">
             <div class="card-body">
 
                 <!-- Title -->
-                <h5>Курс {{course_name}}</h5>
+                <div class="d-flex justify-content-between mb-3">
+                    <h5 >Курс {{course_name}}</h5>
+                    <a class="btn btn-primary-soft btn-sm">Создать урок</a>
+                </div>
+
+
                 <!-- Progress bar -->
                 <div class="overflow-hidden mb-3">
                     <div class="d-flex justify-content-between">
-                        <p class="mb-1 h6">1/2 Completed</p>
-                        <h6 class="mb-1 text-end">80%</h6>
+                        <p class="mb-1 h6">Прогресс</p>
+                        <h6 class="mb-1 text-end">{{course_progress}}%</h6>
                     </div>
-                    <div class="progress progress-sm bg-primary bg-opacity-10">
-                        <div class="progress-bar bg-primary aos aos-init aos-animate" role="progressbar" data-aos="slide-right" data-aos-delay="200" data-aos-duration="1000" data-aos-easing="ease-in-out" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
-                        </div>
-                    </div>
+                        <v-progress-linear :buffer-value="course_progress" :value="course_progress" stream></v-progress-linear>
                 </div>
                 <div v-if="lessons">
                     <lesson-view
@@ -25,23 +29,36 @@
                 </div>
             </div>
         </div>
+        </v-app>
     </div>
 </template>
 
 <script>
 import moment from "moment";
 import LessonsView from "../../components/lessons/LessonsView";
+import {mapState} from "vuex";
 
 export default {
     name: "CourseView",
     components: {
         'lesson-view' : LessonsView
     },
-    props: ['course_id', 'course_name'],
+    props: ['course_id', 'course_name', 'course_length'],
     data(){
         return {
-            lessons: null
+            lessons: null,
+            value: 10
         }
+    },
+    computed: {
+        course_progress(){
+            if(this.lessons){
+                return parseFloat((this.lessons.length / this.course_length).toFixed(2)) * 100
+            }
+            else{
+                return 0;
+            }
+        },
     },
     methods: {
         getLessonsByCourse(){
@@ -57,7 +74,6 @@ export default {
     },
 }
 </script>
-
 <style scoped>
 
 </style>
