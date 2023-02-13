@@ -17,6 +17,7 @@ class CreateSubjectsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('subject_image')->nullable();
+            $table->integer('course_length')->nullable();
             $table->timestamps();
         });
     }
