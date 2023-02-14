@@ -42,7 +42,6 @@ import moment from 'moment'
 import VueGoodTablePlugin from 'vue-good-table';
 import Vuelidate from 'vuelidate'
 
-
 Vue.use(Vuelidate)
 Vue.use(VueMoment)
 Vue.use(VueGoodTablePlugin)
