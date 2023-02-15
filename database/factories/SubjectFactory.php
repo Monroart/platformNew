@@ -15,7 +15,8 @@ class SubjectFactory extends Factory
     {
         return [
             'name' => 'Python',
-            'subject_image' => '/storage/subject_images/python.png'
+            'subject_image' => '/storage/subject_images/python.png',
+            'course_length' => array_rand([16,32,8])
         ];
     }
 }

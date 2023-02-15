@@ -118,7 +118,7 @@
 
 <script>
 
-import {mapActions} from 'vuex'
+import {mapActions, mapState} from 'vuex'
 export default {
     name: "Login",
     data(){
@@ -131,9 +131,12 @@ export default {
     },
     methods:{
         ...mapActions({
-            signIn: "auth/login"
+            signIn: "auth/login",
+            startLoading: "loading/startLoading",
+            endLoading: "loading/endLoading",
         }),
         login(){
+            this.startLoading()
             axios.get('/sanctum/csrf-cookie').then(response => {
                 axios.post('/login',{
                     phone: this.phone,
@@ -144,11 +147,12 @@ export default {
                     this.signIn()
                     this.$store.commit('auth/SET_TOKEN', res.config.headers['X-XSRF-TOKEN'])
                     this.$router.push('/');
+                    this.endLoading()
                 }).catch(err => {
                     console.log(err.response)
+                    this.endLoading()
                 })
             })
-
             this.$router.replace({
                 name: 'Index'
             })
