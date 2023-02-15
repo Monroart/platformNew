@@ -143,6 +143,7 @@ export default {
     }),
     mounted() {
         this.$refs.calendar.checkChange()
+        this.getSlotsForTeacher()
     },
     methods: {
         handleDateChange: function (date) {
@@ -209,6 +210,11 @@ export default {
         rnd(a, b) {
             return Math.floor((b - a + 1) * Math.random()) + a
         },
+        getSlotsForTeacher(){
+            axios.post('api/slots/getSlotsForTeacher').then(response => {
+                console.log(response.data)
+            })
+        }
     },
 }
 </script>
