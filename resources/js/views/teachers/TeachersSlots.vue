@@ -55,6 +55,9 @@
                             :events="events"
                             :event-color="getEventColor"
                             :type="type"
+                            locale="ru-RU"
+                            :first-day-of-week="1"
+                            :weekdays="weekdays"
                             @click:event="showEvent"
                             @click:more="viewDay"
                             @click:date="viewDay"
@@ -130,6 +133,7 @@ export default {
             day: 'День',
             '4day': '4 дня',
         },
+        weekdays: [1, 2, 3, 4, 5, 6, 0],
         selectedEvent: {},
         selectedElement: null,
         selectedOpen: false,
