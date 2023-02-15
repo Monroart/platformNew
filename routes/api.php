@@ -44,3 +44,10 @@ Route::group(['middleware'=>'auth:sanctum',  'prefix' => '/users'], function (){
     Route::get('getAll', [\App\Http\Controllers\User\UserController::class, 'getUsersForState']);
 });
 
+Route::group(['middleware'=>'auth:sanctum',  'prefix' => '/slots'], function (){
+    Route::post('create', [\App\Http\Controllers\TeachersSlots\TeacherSlotsController::class, 'create']);
+    Route::post('edit', [\App\Http\Controllers\TeachersSlots\TeacherSlotsController::class, 'edit']);
+    Route::post('getSlotsForTeacher', [\App\Http\Controllers\TeachersSlots\TeacherSlotsController::class, 'getSlotsForTeacher']);
+    Route::post('getFreeSlots', [\App\Http\Controllers\TeachersSlots\TeacherSlotsController::class, 'getFreeSlots']);
+});
+
