@@ -6,9 +6,9 @@ interface SlotsRepositoryInterface
 {
     public function getAllSlots();
 
-    public function getSlotForTeacher();
+    public function getSlotForTeacher($teacher_id);
 
-    public function getFreeSlots();
+    public function getFreeSlotsBy($request);
 
     public function getSlotsForLesson();
 
