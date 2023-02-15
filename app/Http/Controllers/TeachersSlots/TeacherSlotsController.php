@@ -13,7 +13,7 @@ class TeacherSlotsController extends Controller
 {
     protected $slotsRepository;
     private $slots_time = [
-        '', 'jpeg', 'png', 'gif'
+        '', '', '', ''
     ];
 
     public function create(Request $request){
@@ -53,7 +53,15 @@ class TeacherSlotsController extends Controller
                 print_r($e);
             }
         } try {
-            $TecherSlot->day_of_the_week = $request->input('teacher_id');
+            $TecherSlot->teacher_id = $request->input('teacher_id');
+        } catch (\Exception $e){
+            print_r($e);
+        } try {
+            $TecherSlot->subject_id = $request->input('subject_id');
+        } catch (\Exception $e){
+            print_r($e);
+        } try {
+            $TecherSlot->course_id = $request->input('course_id');
         } catch (\Exception $e){
             print_r($e);
         }
