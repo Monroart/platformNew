@@ -33,7 +33,7 @@ class TeacherSlotsController extends Controller
 //        return $this->slotsRepository->getSlotForTeacher($request->user()->id);
         $dateS = Carbon::createFromFormat('M j Y h:i:s:A', 'May 5 2022 09:00:00:AM');
         $dateE = Carbon::createFromFormat('M j Y h:i:s:A', 'May 5 2022 09:30:00:AM');
-        return['slot' => ['timeStart' => $dateS, 'timeEnd' => $dateE, 'Timur' => 'pes', 'day_of_the_week' => 1, 'subject_id' => 1, 'course_id' => 1]];
+        return['slot' => ['timeStart' => $dateS, 'timeEnd' => $dateE, 'day_of_the_week' => 1, 'subject_id' => 1, 'course_id' => 1]];
     }
 
     public function edit(Request $request){
