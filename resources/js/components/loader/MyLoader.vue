@@ -3,12 +3,16 @@
         class="loader"
         :class="{ 'loader--visible': visible }"
     >
-        Loading
+        <spinner name="pacman" color="#519ce8"></spinner>
     </div>
 </template>
 <script>
+import Spinner from 'vue-spinkit'
 export default {
     name: "MyLoader",
+    components: {
+        'spinner': Spinner
+    },
     props: ["visible"]
 };
 </script>
