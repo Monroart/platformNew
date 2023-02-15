@@ -5,6 +5,7 @@ namespace App\Http\Controllers\TeachersSlots;
 use App\Repositories\SlotsRepository;
 use App\Http\Controllers\Controller;
 use App\Models\TeacherSlot;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Symfony\Component\Process\Exception\LogicException;
 
@@ -30,7 +31,8 @@ class TeacherSlotsController extends Controller
     public function getSlotsForTeacher(Request $request, SlotsRepository $slotsRepository){
         $this->slotsRepository = $slotsRepository;
 //        return $this->slotsRepository->getSlotForTeacher($request->user()->id);
-        return['slot' => ['time' => '9.00-9.30', 'day_of_the_week' => 1, 'subject_id' => 1, 'course_id' => 1]];
+        $date = Carbon::createFromFormat('M j Y h:i:s:A', 'May 5 2022 09:00:00:AM');
+        return['slot' => ['time' => $date, 'day_of_the_week' => 1, 'subject_id' => 1, 'course_id' => 1]];
     }
 
     public function edit(Request $request){
