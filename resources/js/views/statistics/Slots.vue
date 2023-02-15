@@ -1,40 +1,59 @@
 <template>
-    <table style="border: 1px solid #ccc">
-        <tr v-for="row in dateandtime" :key="row.rows">
-            <td  v-for="item in row" style="border: 1px solid #ccc;width: 100px;height: 40px" :key="item.cols">
+    <div class="col-md-9">
+        <table style="border: 1px solid #ccc">
+            <tr v-for="row in dateandtime" :key="row.rows">
+                <td v-for="item in row" style="border: 1px solid #ccc;width: 100px;height: 40px" :key="item.cols">
 
-                <div v-if="item.coursename!=='' && item.remark==='w'">
-                    <div style="text-align:center;line-height:40px;background-color: yellowgreen;width: 140px;height: 30px;font-size: 10px;font-weight: bold" >{{item.coursename}}</div>
-                </div>
-                <div v-if="item.coursename!=='' && item.remark==='w'">
-                    <div style="text-align:center;line-height:40px;background-color: yellow;width: 140px;height: 30px;font-size: 10px;font-weight: bold" >{{item.teachername}}</div>
-                </div>
-                <div v-if="item.coursename!=='' && item.remark==='w'">
-                    <div style="text-align:center;line-height:40px;background-color: lightgoldenrodyellow;width: 140px;height: 30px;font-size: 10px;font-weight: bold" >{{item.message}}</div>
-                </div>
-
-
-                <div v-else-if="row.rows===0&&item.cols!==0">
-                    <div style="text-align:center;line-height:40px;background-color: #2eff87;width: 140px;height: 30px;font-size: 20px;font-weight: bold" >{{item.message}}</div>
-                </div>
-
-
-                <div v-else-if="row.rows===1&&item.cols!==0">
-                    <div style="text-align:center;line-height:40px;background-color: #29c6ea;width: 140px;height: 30px;font-size: 20px;font-weight: bold" >{{item.message}}</div>
-                </div>
-
-
-                <div v-else-if="row.rows!==1&&row.rows!==0&&item.cols===0">
-                    <div style="text-align:center;line-height:40px;background-color: #ccc;width: 140px;height: 90px;font-size: 15px;font-weight: bold" >{{item.message}}</div>
-                </div>
+                    <div v-if="item.coursename!=='' && item.remark==='w'">
+                        <div
+                            style="text-align:center;line-height:40px;background-color: yellowgreen;width: 140px;height: 30px;font-size: 10px;font-weight: bold">
+                            {{ item.coursename }}
+                        </div>
+                    </div>
+                    <div v-if="item.coursename!=='' && item.remark==='w'">
+                        <div
+                            style="text-align:center;line-height:40px;background-color: yellow;width: 140px;height: 30px;font-size: 10px;font-weight: bold">
+                            {{ item.teachername }}
+                        </div>
+                    </div>
+                    <div v-if="item.coursename!=='' && item.remark==='w'">
+                        <div
+                            style="text-align:center;line-height:40px;background-color: lightgoldenrodyellow;width: 140px;height: 30px;font-size: 10px;font-weight: bold">
+                            {{ item.message }}
+                        </div>
+                    </div>
 
 
-            </td>
-        </tr>
+                    <div v-else-if="row.rows===0&&item.cols!==0">
+                        <div
+                            style="text-align:center;line-height:40px;background-color: #2eff87;width: 140px;height: 30px;font-size: 20px;font-weight: bold">
+                            {{ item.message }}
+                        </div>
+                    </div>
 
 
+                    <div v-else-if="row.rows===1&&item.cols!==0">
+                        <div
+                            style="text-align:center;line-height:40px;background-color: #29c6ea;width: 140px;height: 30px;font-size: 20px;font-weight: bold">
+                            {{ item.message }}
+                        </div>
+                    </div>
 
-    </table>
+
+                    <div v-else-if="row.rows!==1&&row.rows!==0&&item.cols===0">
+                        <div
+                            style="text-align:center;line-height:40px;background-color: #ccc;width: 140px;height: 90px;font-size: 15px;font-weight: bold">
+                            {{ item.message }}
+                        </div>
+                    </div>
+
+
+                </td>
+            </tr>
+
+
+        </table>
+    </div>
 </template>
 
 
@@ -44,7 +63,7 @@ import {onMounted, reactive, toRefs} from "vue";
 export default {
     setup() {
         const data = reactive({
-            dateandtime:"",
+            dateandtime: "",
             currentclasstime: {
                 date: "",
                 data: "",
@@ -125,7 +144,7 @@ export default {
                     data.currentclasstime.data = year + "-" + month + "-" + day
                     for (let j = 0; j <= 6; j++)//Пробегаемся с понедельника по субботу
                     {
-                        if (j !==0)//У нас стоит понедельник и воскресенье
+                        if (j !== 0)//У нас стоит понедельник и воскресенье
                             date.setDate(date.getDate() + 1)//пока воскресенье не закончится
                         year = date.getFullYear()
                         month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
@@ -145,36 +164,34 @@ export default {
 
             /*const  time=new Data*/
             data.showdataevisiable = true;
-            data.message=  "Current Week: Week"+data.currentclasstime.time+","+data.currentclasstime.data
+            data.message = "Current Week: Week" + data.currentclasstime.time + "," + data.currentclasstime.data
         }
 
-        function getweekday(date){
+        function getweekday(date) {
             // date例如:'2022-03-05'
-            var weekArray = ["Понедельник","Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
-            var week  = weekArray[new Date(date).getDay()]
+            var weekArray = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
+            var week = weekArray[new Date(date).getDay()]
             return week
         }
 
 
         const thisweekfuntion = () => {
 
-            while(data.currentclasstime.time!==1)//возврат к первой неделе
+            while (data.currentclasstime.time !== 1)//возврат к первой неделе
             {
                 lastweekfuntion()
             }
-            data.currentclasstime.date.setDate(data.currentclasstime.date.getDate()-7)
-            data.currentclasstime.time=0
-            let current=new Date()
-            let fortime=new Date()
-            while(data.currentclasstime.time!==16)
-            {
+            data.currentclasstime.date.setDate(data.currentclasstime.date.getDate() - 7)
+            data.currentclasstime.time = 0
+            let current = new Date()
+            let fortime = new Date()
+            while (data.currentclasstime.time !== 16) {
                 fortime.setMonth(data.currentclasstime.date.getMonth())
                 fortime.setDate(data.currentclasstime.date.getDate())
-                for(let j=0;j<=6;j++) {
-                    if (j !==0)
+                for (let j = 0; j <= 6; j++) {
+                    if (j !== 0)
                         fortime.setDate(fortime.getDate() + 1)
-                    if (fortime.getDate() === current.getDate() && fortime.getMonth() === current.getMonth())
-                    {
+                    if (fortime.getDate() === current.getDate() && fortime.getMonth() === current.getMonth()) {
                         nextweekfuntion()
                         return
                     }
@@ -184,76 +201,70 @@ export default {
             }
         }
 
-        const lastweekfuntion=()=>{
-            if(data.currentclasstime.time===1)
-            {
+        const lastweekfuntion = () => {
+            if (data.currentclasstime.time === 1) {
                 return
             }
-            let date=new Date()
+            let date = new Date()
             date.setMonth(data.currentclasstime.date.getMonth())
             date.setDate(data.currentclasstime.date.getDate())
-            date.setDate(date.getDate()-14)
-            let year=date.getFullYear()//Нынешний год
-            let month = (date.getMonth()+1)<10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;//Получить текущий месяц
-            let day = date.getDate()<10 ? '0'+date.getDate() : date.getDate();//День
-            data.currentclasstime.data=year+"-"+month+"-"+day
-            for(let j=0;j<=6;j++)//Короче, тут то же самое, что выше, комментарии оставлять не буду
+            date.setDate(date.getDate() - 14)
+            let year = date.getFullYear()//Нынешний год
+            let month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;//Получить текущий месяц
+            let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();//День
+            data.currentclasstime.data = year + "-" + month + "-" + day
+            for (let j = 0; j <= 6; j++)//Короче, тут то же самое, что выше, комментарии оставлять не буду
             {
-                if(j!==0)
-                    date.setDate(date.getDate()+1)
-                year=date.getFullYear()
-                month = (date.getMonth()+1)<10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;
-                day = date.getDate()<10 ? '0'+date.getDate() : date.getDate();
-                data.dateandtime[0][j+1]['message'] = month+"-"+day
-                if(j===6)
-                {
-                    data.currentclasstime.date=date
-                    data.currentclasstime.date.setDate(data.currentclasstime.date.getDate()+1)
-                    data.currentclasstime.data+=~year+"-"+month+"-"+day
+                if (j !== 0)
+                    date.setDate(date.getDate() + 1)
+                year = date.getFullYear()
+                month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+                day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+                data.dateandtime[0][j + 1]['message'] = month + "-" + day
+                if (j === 6) {
+                    data.currentclasstime.date = date
+                    data.currentclasstime.date.setDate(data.currentclasstime.date.getDate() + 1)
+                    data.currentclasstime.data += ~year + "-" + month + "-" + day
                 }
             }
-            data.currentclasstime.time-=1
-            data.message=  "Нынешняя неделя:"+data.currentclasstime.time+","+data.currentclasstime.data
+            data.currentclasstime.time -= 1
+            data.message = "Нынешняя неделя:" + data.currentclasstime.time + "," + data.currentclasstime.data
         }
 
-        const nextweekfuntion=()=>
-        {
-            if(data.currentclasstime.time===16)
-            {
+        const nextweekfuntion = () => {
+            if (data.currentclasstime.time === 16) {
                 return
             }
-            let date=new Date()
+            let date = new Date()
             date.setMonth(data.currentclasstime.date.getMonth())
             date.setDate(data.currentclasstime.date.getDate())
-            let year=date.getFullYear()
-            let month = (date.getMonth()+1)<10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;
-            let day = date.getDate()<10 ? '0'+date.getDate() : date.getDate();
-            data.currentclasstime.date=date
-            data.currentclasstime.data=year+"-"+month+"-"+day
-            for(let j=0;j<=6;j++)
-            {
-                if(j!==0)
-                    date.setDate(date.getDate()+1)
-                year=date.getFullYear()
-                month = (date.getMonth()+1)<10 ? '0'+(date.getMonth()+1) : date.getMonth()+1;
-                day = date.getDate()<10 ? '0'+date.getDate() : date.getDate();
-                data.dateandtime[0][j+1]['message'] = month+"-"+day
-                if(j===6)
-                {
-                    data.currentclasstime.date=date
-                    data.currentclasstime.date.setDate(data.currentclasstime.date.getDate()+1)
-                    data.currentclasstime.data+=~year+"-"+month+"-"+day
+            let year = date.getFullYear()
+            let month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+            let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+            data.currentclasstime.date = date
+            data.currentclasstime.data = year + "-" + month + "-" + day
+            for (let j = 0; j <= 6; j++) {
+                if (j !== 0)
+                    date.setDate(date.getDate() + 1)
+                year = date.getFullYear()
+                month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+                day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+                data.dateandtime[0][j + 1]['message'] = month + "-" + day
+                if (j === 6) {
+                    data.currentclasstime.date = date
+                    data.currentclasstime.date.setDate(data.currentclasstime.date.getDate() + 1)
+                    data.currentclasstime.data += ~year + "-" + month + "-" + day
                 }
             }
-            data.currentclasstime.time+=1
-            data.message=  "Нынешняя неделя:"+data.currentclasstime.time+","+data.currentclasstime.data
+            data.currentclasstime.time += 1
+            data.message = "Нынешняя неделя:" + data.currentclasstime.time + "," + data.currentclasstime.data
 
         }
 
 //помогите я запутался
 //прошёл день, помощь не нужна, я всё поправил
 //функции эти я вырезал, но колонку пустую оставил, когда будем делать админ панель, если это надо будет, то
-        return{
+        return {
             thisweekfuntion,
             lastweekfuntion,
             showdate,
@@ -265,7 +276,7 @@ export default {
 
     methods: {
 
-        loadAllSlots: function(){
+        loadAllSlots: function () {
             axios.post('/api/slots/getAll')
         }
     }
