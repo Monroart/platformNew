@@ -20,8 +20,18 @@ class CreateTeacherSlotsTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
+            $table->integer('subject_id')->unsigned()->index();
+            $table->foreign('subject_id')->references('id')->on('subjects')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->integer('course_id')->unsigned()->index();
+            $table->foreign('course_id')->references('id')->on('courses')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->string('time');
-            $table->integer('day_of_th_week');
+            $table->integer('day_of_the_week');
             $table->timestamps();
         });
     }
