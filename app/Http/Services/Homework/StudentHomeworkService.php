@@ -7,41 +7,24 @@ use App\Models\Lesson;
 
 class StudentHomeworkService
 {
-    private $user_id;
-    public function __construct(int $user_id)
-    {
-        $this->user_id = $user_id;
-    }
-
     public function getLessonInfo(int $lesson_id)
     {
-        try {
-            return [
-                'status' => 'ok',
-                'lesson' => Lesson::find($lesson_id)
-            ];
-        } catch (\Exception $e) {
-            return [
-                'status' => 'ok',
-                'message' => $e->getMessage()
-            ];
-        }
+        $lesson = Lesson::query()->from('lessons AS l')
+            ->leftJoin('courses AS c', 'l.course_id', '=', 'c.id')
+            ->leftJoin('users AS u', 'l.substitute_teacher_id', '=', 'u.id')
+            ->leftJoin('subject_materials AS sm', 'l.subject_material_id', '=', 'sm.id')
+            ->leftJoin('home_works AS hw', 'l.homework_id', '=', 'hw.id')
+            ->where('l.id', $lesson_id)
+            ->select('l.lesson_number', 'l.date', 'sm.name AS theme', 'c.name AS course_name',
+                'u.name AS teacher', 'hw.text', 'hw.image_path'
+            )
+            ->first();
 
+        return $lesson;
     }
 
     public function getHomework(int $lesson_id)
     {
-        try {
-            return [
-                'status' => 'ok',
-                'lesson' => Lesson::find($lesson_id)
-            ];
-        } catch (\Exception $e) {
-            return [
-                'status' => 'ok',
-                'message' => $e->getMessage()
-            ];
-        }
 
     }
 
