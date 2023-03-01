@@ -7,17 +7,13 @@ use Illuminate\Http\Request;
 
 class StudentHomeworkController extends Controller
 {
-    public function getLessonInfo(Request $request)
+    public function getLessonInfo(Request $request, StudentHomeworkService $service)
     {
-        $service = new StudentHomeworkService($request->user()['id']);
-
         return $service->getLessonInfo($request->input('lesson_id'));
     }
 
     public function getHomework(Request $request)
     {
-        $service = new StudentHomeworkService($request->user()['id']);
 
-        return $service->getLessonInfo($request->input('lesson_id'));
     }
 }
