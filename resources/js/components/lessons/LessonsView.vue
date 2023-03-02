@@ -29,7 +29,7 @@
                                                 v-on="on"
                                             ></i>
                                         </template>
-                                        <span>Замена: {{$store.getters["users/getById"](lesson.substitute_teacher_id) ? $store.getters["users/getById"](course.substitute_teacher_id).name : ''}}</span>
+<!--                                        <span>Замена: {{$store.getters["users/getById"](lesson.substitute_teacher_id) ? $store.getters["users/getById"](course.substitute_teacher_id).name : ''}}</span>-->
                                     </v-tooltip>
                                 </div>
                             </div>
