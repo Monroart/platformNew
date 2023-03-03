@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\LessonDescription;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 
 class StudentHomeworkService
@@ -51,18 +52,30 @@ class StudentHomeworkService
 
     public static function uploadFile(Request $request)
     {
-        if ($request->hasFile('files')) {
+
             try {
-                $file = $request->files;
-                $extension = $file->getOriginalExtension();
-                if (!in_array($extension, self::AVAILABLE_EXTENSIONS))
-                    return [
-                        'status'  => 'error',
-                        'message' => 'Не подходящее расширение файла'
-                    ];
+                if ($request->hasFile('attachments')) {
+                    $attachments = $request->attachments;
+                    /** @var UploadedFile $file */
+                    foreach ($attachments as $file) {
+                        $extension = $file->getClientOriginalExtension();
+                        if (!in_array($extension, self::AVAILABLE_EXTENSIONS))
+                            return [
+                                'status'  => 'error',
+                                'message' => 'Не подходящее расширение файла'
+                            ];
 
-                $file->move(storage_path() . 'app/lessons_descriptions', self::getRandomFileName() . $extension);
+                        $fileUrl = $file->store('public/lessons_descriptions');
+                    }
+                }
 
+                LessonDescription::create([
+                    'file' => $fileUrl ?? '',
+                    'file_type' => 'image',
+                    'comment' => $request->comment ?? '',
+                    'user_id' => $request->user()['id'],
+                    'lesson_id' => $request->lesson_id
+                ]);
             } catch (\Exception $e) {
                 return [
                     'status'  => 'error',
@@ -70,8 +83,6 @@ class StudentHomeworkService
                 ];
             }
             return ['status' => 'ok'];
-        }
-        return ['hz'];
     }
 
     private static function getRandomFileName(): string

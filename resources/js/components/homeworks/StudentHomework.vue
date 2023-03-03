@@ -60,14 +60,13 @@
         <div class="d-flex mt-4">
             <div data-app class="d-flex px-2 mb-0">
                 <v-file-input
-                    v-model="form.files"
-                    ref="file"
+                    v-model="files"
                     multiple
                     prepend-icon="mdi-paperclip"
                 >
                 </v-file-input>
             </div>
-            <textarea v-model="form.comment" class="form-control mb-0 shadow-hover" rows="0" spellcheck="false"></textarea>
+            <textarea v-model="comment" class="form-control mb-0 shadow-hover" rows="0" spellcheck="false"></textarea>
             <button @click="sendForm" class="btn btn-sm btn-primary-soft ms-2 px-4 mb-0 flex-shrink-0"><i class="fas fa-paper-plane fs-8"></i></button>
         </div>
 
@@ -89,7 +88,7 @@
                                  :class="{'bg-primary-soft': $store.getters['users/getById'](comment.user_id).role_id === 1,
                                         'bg-light': $store.getters['users/getById'](comment.user_id).role_id === 2}"
                             >
-                                <div class="d-flex justify-content-left">
+                                <div class="d-flex justify-content-between">
                                     <div class="me-2">
                                         <h6 class="mb-1 lead fw-bold"> <a href="#!"> {{ $store.getters['users/getById'](comment.user_id).name }} </a></h6>
                                         <p class="mb-0">{{ comment.comment }}</p>
@@ -131,9 +130,8 @@ export default {
 
     data() {
         return {
-            form: {
-                comment: '',
-            },
+            comment: '',
+            files: null,
             lesson: {},
             loadingDescription: false,
             description: {},
@@ -163,17 +161,27 @@ export default {
         },
 
         sendForm() {
-            let file = this.$refs.file
-            let data = new FormData();
-            data.append('files', file)
+            let formData = new FormData()
+            formData.append('lesson_id', this.lesson_id)
+            if (this.files) {
+                this.files.forEach((file, idx) => {
+                    formData.append(`attachments[${idx}]`, file)
+                })
+            }
 
-            axios.post('api/homeworks/lessons/uploadFile', data, {
+            if (this.comment)
+                formData.append('comment', this.comment)
+
+            axios.post('api/homeworks/lessons/uploadFile', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             }).then(((res) => {
-                if (res.data.status === 'ok')
-                    console.log(5555)
+                if (res.data.status === 'ok') {
+                    this.comment = null
+                    this.files = null
+                    this.loadLessonDescription()
+                }
             }))
         }
     },
