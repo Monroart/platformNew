@@ -5,13 +5,16 @@ namespace App\Http\Services\Homework;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\LessonDescription;
+use App\Models\LessonFiles;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class StudentHomeworkService
 {
-    const AVAILABLE_EXTENSIONS = ['jpeg', 'png', 'pdf', 'csv'];
+    const AVAILABLE_EXTENSIONS = ['jpeg', 'png', 'pdf', 'csv', 'jpg', 'zip'];
+    const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png'];
 
     /**
      * Краткая информация о уроке, для шапки в дз
@@ -43,6 +46,7 @@ class StudentHomeworkService
     public function getDescriptionByLessonId(int $lesson_id): array
     {
         $descr = LessonDescription::query()
+            ->with('files')
             ->where('lesson_id', $lesson_id)
             ->get()
             ->toArray();
@@ -50,44 +54,66 @@ class StudentHomeworkService
         return $descr;
     }
 
-    public static function uploadFile(Request $request)
+    public static function createComment(Request $request): array
     {
+        try {
+            if ($request->hasFile('attachments')) {
+                $attachments = $request->attachments;
 
-            try {
-                if ($request->hasFile('attachments')) {
-                    $attachments = $request->attachments;
-                    /** @var UploadedFile $file */
-                    foreach ($attachments as $file) {
-                        $extension = $file->getClientOriginalExtension();
-                        if (!in_array($extension, self::AVAILABLE_EXTENSIONS))
-                            return [
-                                'status'  => 'error',
-                                'message' => 'Не подходящее расширение файла'
-                            ];
+                DB::beginTransaction();
 
-                        $fileUrl = $file->store('public/lessons_descriptions');
-                    }
-                }
-
-                LessonDescription::create([
-                    'file' => $fileUrl ?? '',
-                    'file_type' => 'image',
-                    'comment' => $request->comment ?? '',
-                    'user_id' => $request->user()['id'],
+                $comment = LessonDescription::create([
+                    'comment'   => $request->comment ?? '',
+                    'user_id'   => $request->user()['id'],
                     'lesson_id' => $request->lesson_id
                 ]);
-            } catch (\Exception $e) {
-                return [
-                    'status'  => 'error',
-                    'message' => $e->getMessage()
-                ];
+
+                /** @var UploadedFile $file */
+                foreach ($attachments as $file) {
+                    $extension = $file->getClientOriginalExtension();
+                    if (!in_array($extension, self::AVAILABLE_EXTENSIONS))
+                        return [
+                            'status'  => 'error',
+                            'message' => 'Не подходящее расширение файла'
+                        ];
+
+                    $fileUrl = $file->store('public/lessons_descriptions');
+
+                    if ($comment && $fileUrl)
+                        LessonFiles::create([
+                            'lesson_description_id' => $comment->id,
+                            'file_type'             => self::getFileType($extension),
+                            'path'                  => 'storage/' . str_replace('public/', '', $fileUrl)
+                        ]);
+                }
             }
+
+            DB::commit();
+
             return ['status' => 'ok'];
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return [
+                'status'  => 'error',
+                'message' => $e->getMessage()
+            ];
+        }
     }
 
     private static function getRandomFileName(): string
     {
         return Hash::make(time() . time() . time());
+    }
+
+    private static function getFileType(string $extension): string
+    {
+        if (in_array($extension, self::IMAGE_EXTENSIONS))
+            return 'image';
+        else
+            return 'document';
     }
 
 }

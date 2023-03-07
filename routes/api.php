@@ -39,7 +39,7 @@ Route::group(['middleware'=>'auth:sanctum',  'prefix' => '/profile'], function (
 Route::group(['middleware'=>'auth:sanctum',  'prefix' => '/homeworks'], function (){
     Route::post('lessons/getById', [\App\Http\Controllers\Homework\StudentHomeworkController::class, 'getLessonInfo']);
     Route::post('lessons/getDescription', [\App\Http\Controllers\Homework\StudentHomeworkController::class, 'getHomework']);
-    Route::post('lessons/uploadFile', [\App\Http\Controllers\Homework\StudentHomeworkController::class, 'uploadFile']);
+    Route::post('lessons/createComment', [\App\Http\Controllers\Homework\StudentHomeworkController::class, 'createComment']);
 });
 
 Route::group(['middleware'=>'auth:sanctum',  'prefix' => '/users'], function (){

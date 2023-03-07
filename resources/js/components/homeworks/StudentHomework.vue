@@ -93,13 +93,19 @@
                                         <h6 class="mb-1 lead fw-bold"> <a href="#!"> {{ $store.getters['users/getById'](comment.user_id).name }} </a></h6>
                                         <p class="mb-0">{{ comment.comment }}</p>
 
-                                        <div v-if="comment.file" class="d-sm-flex justify-content-sm-between align-items-center mt-2">
-                                            <a v-if="comment.file" class="d-flex px-3" :href="comment.file">
+                                        <div v-if="comment.files" v-for="file in comment.files" class="d-sm-flex justify-content-sm-between align-items-center mt-2">
+                                            <a v-if="file.file_type === 'document'" class="d-flex px-3" :href="file.path">
                                                 <a class="btn btn-danger-soft btn-round mb-0"><i class="fas fa-play my-auto"></i></a>
                                                 <div class="ms-2 ms-sm-3 mt-1 mt-sm-0 d-flex">
-                                                    <p class="my-auto filename">{{ getFileName(comment.file) }}</p>
+                                                    <p class="my-auto filename">{{ getFileName(file.path) }}</p>
                                                 </div>
                                             </a>
+
+                                            <div v-if="file.file_type === 'image'" class="col-md-5">
+                                                <a :href="file.path" target="_blank">
+                                                    <img :src="file.path" alt="" class="img-fluid rounded-3">
+                                                </a>
+                                            </div>
                                         </div>
 
                                     </div>
@@ -172,7 +178,7 @@ export default {
             if (this.comment)
                 formData.append('comment', this.comment)
 
-            axios.post('api/homeworks/lessons/uploadFile', formData, {
+            axios.post('api/homeworks/lessons/createComment', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

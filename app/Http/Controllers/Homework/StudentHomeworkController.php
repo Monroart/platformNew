@@ -17,8 +17,8 @@ class StudentHomeworkController extends Controller
         return $service->getDescriptionByLessonId($request->input('lesson_id'));
     }
 
-    public function uploadFile(Request $request)
+    public function createComment(Request $request)
     {
-        return StudentHomeworkService::uploadFile($request);
+        return StudentHomeworkService::createComment($request);
     }
 }
