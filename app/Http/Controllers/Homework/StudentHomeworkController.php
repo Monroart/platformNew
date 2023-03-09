@@ -12,8 +12,13 @@ class StudentHomeworkController extends Controller
         return $service->getLessonInfo($request->input('lesson_id'));
     }
 
-    public function getHomework(Request $request)
+    public function getHomework(Request $request, StudentHomeworkService $service)
     {
+        return $service->getDescriptionByLessonId($request->input('lesson_id'));
+    }
 
+    public function createComment(Request $request)
+    {
+        return StudentHomeworkService::createComment($request);
     }
 }
