@@ -43,7 +43,7 @@
                                     <a :href="lesson.material_link" class="btn btn-xs btn-light mb-0 me-2" target="_blank"><i class="fas fa-info me-2"></i>Материал урока</a>
                                 </div>
                                 <!--                                            <p class="mb-0">{{lesson.date | momentStart}}</p>-->
-                                <span class="badge bg-dark me-2">{{lesson.date | momentStart}}</span>
+                                <span class="badge bg-dark me-2">Дата урока: {{lesson.date | momentStart}}</span>
                             </div>
 
 
@@ -71,6 +71,7 @@
                 </div>
             </div>
         </div>
+
     </div>
     <!-- Accordion END -->
 </template>
