@@ -8,7 +8,7 @@ use App\Models\Lesson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CourseCountroller extends Controller
+class CourseController extends Controller
 {
     public function getMyCourses(Request $request){
         $user = $request->user();
