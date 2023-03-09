@@ -18,4 +18,9 @@ class Lesson extends Model
         'substitute_teacher_id',
         'homework_id'
     ];
+
+    public function lesson_description()
+    {
+        return $this->hasMany(LessonDescription::class);
+    }
 }
