@@ -94,7 +94,7 @@
                                         <p class="mb-0">{{ comment.comment }}</p>
 
                                         <div v-if="comment.files" v-for="file in comment.files" class="d-sm-flex justify-content-sm-between align-items-center mt-2">
-                                            <a v-if="file.file_type === 'document'" class="d-flex px-3" :href="file.path">
+                                            <a v-if="file.file_type === 'document'" class="d-flex px-3" :href="file.path" download>
                                                 <a class="btn btn-danger-soft btn-round mb-0"><i class="fas fa-play my-auto"></i></a>
                                                 <div class="ms-2 ms-sm-3 mt-1 mt-sm-0 d-flex">
                                                     <p class="my-auto filename">{{ getFileName(file.path) }}</p>
@@ -167,6 +167,9 @@ export default {
         },
 
         sendForm() {
+            if (!this.files && !this.comment)
+                return false;
+
             let formData = new FormData()
             formData.append('lesson_id', this.lesson_id)
             if (this.files) {

@@ -48,6 +48,7 @@ class StudentHomeworkService
         $descr = LessonDescription::query()
             ->with('files')
             ->where('lesson_id', $lesson_id)
+            ->orderBy('created_at')
             ->get()
             ->toArray();
 
@@ -57,33 +58,36 @@ class StudentHomeworkService
     public static function createComment(Request $request): array
     {
         try {
+            DB::beginTransaction();
+
+            $comment = LessonDescription::create([
+                'comment'   => $request->comment ?? '',
+                'user_id'   => $request->user()['id'],
+                'lesson_id' => $request->lesson_id
+            ]);
+
             if ($request->hasFile('attachments')) {
                 $attachments = $request->attachments;
-
-                DB::beginTransaction();
-
-                $comment = LessonDescription::create([
-                    'comment'   => $request->comment ?? '',
-                    'user_id'   => $request->user()['id'],
-                    'lesson_id' => $request->lesson_id
-                ]);
-
                 /** @var UploadedFile $file */
                 foreach ($attachments as $file) {
                     $extension = $file->getClientOriginalExtension();
-                    if (!in_array($extension, self::AVAILABLE_EXTENSIONS))
+                    if (!in_array($extension, self::AVAILABLE_EXTENSIONS)) {
+
+                        DB::rollBack();
+
                         return [
                             'status'  => 'error',
                             'message' => 'Не подходящее расширение файла'
                         ];
+                    }
 
-                    $fileUrl = $file->store('public/lessons_descriptions');
+                    $fileUrl = self::removeFileExtention($file->store('public/lessons_descriptions'));
 
                     if ($comment && $fileUrl)
                         LessonFiles::create([
                             'lesson_description_id' => $comment->id,
                             'file_type'             => self::getFileType($extension),
-                            'path'                  => 'storage/' . str_replace('public/', '', $fileUrl)
+                            'path'                  => 'storage/' . str_replace('public/', '', $fileUrl .  '.' . $extension)
                         ]);
                 }
             }
@@ -114,6 +118,11 @@ class StudentHomeworkService
             return 'image';
         else
             return 'document';
+    }
+
+    public static function removeFileExtention(string $fileName): string
+    {
+        return substr($fileName, 0, strrpos($fileName,'.'));
     }
 
 }
