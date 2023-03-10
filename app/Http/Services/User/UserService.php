@@ -27,18 +27,18 @@ class UserService
      */
     public function getConnectionsForUser()
     {
-        $courseIds = CourseUser::query()->where('user_id', $this->user['id'])->pluck('course_id')->toArray();
-        $studentIds = CourseUser::query()->whereIn('course_id', $courseIds)->pluck('user_id')->toArray();
-        $teacherIds = Course::query()->whereIn('id', $courseIds)->pluck('default_teacher_id')->toArray();
-        $subTeacherIds = Lesson::query()->whereIn('course_id', $courseIds)->pluck('substitute_teacher_id')->toArray();
+//        $courseIds = CourseUser::query()->where('user_id', $this->user['id'])->pluck('course_id')->toArray();
+//        $studentIds = CourseUser::query()->whereIn('course_id', $courseIds)->pluck('user_id')->toArray();
+//        $teacherIds = Course::query()->whereIn('default_teacher_id', $courseIds)->pluck('default_teacher_id')->toArray();
+//        $subTeacherIds = Lesson::query()->whereIn('course_id', $courseIds)->pluck('substitute_teacher_id')->toArray();
 
-        $ids = array_merge($studentIds,$subTeacherIds, $teacherIds);
+//        $ids = array_merge($studentIds,$subTeacherIds, $teacherIds, [$this->user['id']]);
 
 
         $connections = User::from('users AS u')
             ->leftJoin('profiles AS p', 'u.id', '=', 'p.user_id')
             ->leftJoin('course_users AS cu', 'cu.user_id', '=', 'u.id')
-            ->whereIn('u.id', $ids)
+//            ->whereIn('u.id', $ids)
             ->select(array_values(self::CONNECIONS_FIELDS))
             ->get()
             ->toArray();

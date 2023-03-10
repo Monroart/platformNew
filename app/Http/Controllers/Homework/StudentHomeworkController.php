@@ -10,12 +10,12 @@ class StudentHomeworkController extends Controller
 {
     public function getLessonInfo(Request $request, StudentHomeworkService $service)
     {
-        return $service->getLessonInfo($request->input('lesson_id'));
+        return $service->getLessonInfo($request->lesson_id);
     }
 
     public function getHomework(Request $request, StudentHomeworkService $service): array
     {
-        return $service->getDescriptionByLessonId($request->input('lesson_id'));
+        return $service->getDescriptionByLessonId($request->lesson_id);
     }
 
     public function createComment(Request $request): array
@@ -30,8 +30,13 @@ class StudentHomeworkController extends Controller
         return $service->getCourseList($request->role);
     }
 
-    public function lessonsList(Request $request, HomeworkService $service)
+    public function lessonsList(Request $request, HomeworkService $service): array
     {
         return $service->getLessonsByCourseId($request->course_id);
+    }
+
+    public function studentsList(Request $request, HomeworkService $service): array
+    {
+        return $service->getStudentList($request->lesson_id, $request->user()['id']);
     }
 }
