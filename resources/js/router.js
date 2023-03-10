@@ -8,8 +8,10 @@ import Profile from "./views/profile/Profile";
 import Login from "./views/auth/Login";
 import Courses from "./views/courses/Courses";
 import Homeworks from "./views/homeworks/Homeworks";
+import Compiler from "./views/compiler/Compiler";
 import CourseView from "./views/courses/CourseView";
 import StudentHomework from "./components/homeworks/StudentHomework";
+import TeachersSlots from "./views/teachers/TeachersSlots";
 
 const routes = [
     {
@@ -44,6 +46,14 @@ const routes = [
     {
         path: '/homeworks',
         component: Homeworks
+    },
+    {
+        path: '/compile',
+        component: Compiler
+    },
+    {
+        path: '/myslots',
+        component: TeachersSlots
     },
 ];
 

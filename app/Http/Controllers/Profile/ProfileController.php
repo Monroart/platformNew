@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\Models\Course;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,7 +15,10 @@ class ProfileController
     ];
 
     public function changeImage(Request $request){
-        $user = $request->user();
+        if($request->input('user_id')!=null)
+            $user = User::find($request->input('user_id'));
+        else
+            $user = $request->user();
         $file = $request->image;
         $extension = $file->getClientOriginalExtension();
         if (!in_array($extension, $this->nice_extenstions)) {
@@ -44,23 +48,11 @@ class ProfileController
         ];
     }
 
-//    public function changeImage(Request $request){
-//        $user = $request->user();
-//        $file = $request->image;
-//        $extension = $file->getClientOriginalExtension();
-//        if (!in_array($extension, $this->nice_extenstions)) {
-//            return [
-//                'status' => 'error',
-//                'message' => 'wrong file extension - ' . $extension
-//            ];
-//        }
-//        $filename = Storage::put('storage/profile_images', $file);
-//        return([
-//         'url' => 'да']);
-//    }
-
         public function getImage(Request $request){
-        $user = $request->user();
+        if($request->input('user_id')!=null)
+            $user = User::find($request->input('user_id'));
+        else
+            $user = $request->user();
         $profile = Profile::where('user_id', $user->id)->first();
         $pathImage = $profile->profile_image;
         return[
@@ -69,7 +61,10 @@ class ProfileController
     }
 
     public function deleteImage(Request $request){
-        $user = $request->user();
+        if($request->input('user_id')!=null)
+            $user = User::find($request->input('user_id'));
+        else
+            $user = $request->user();
         $profile = Profile::where('user_id', $user->id)->first();
         $profile->profile_image = null;
         $profile->save();
@@ -79,7 +74,10 @@ class ProfileController
     }
 
     public function saveInfo(Request $request){
-        $user = $request->user();
+        if($request->input('user_id')!=null)
+            $user = User::find($request->input('user_id'));
+        else
+            $user = $request->user();
         $profile = Profile::where('user_id', $user->id)->first();
         $name = $request->input('name');
         $phone = $request->input('phone');
@@ -107,12 +105,19 @@ class ProfileController
         ];
     }
     public function getInfoProfile(Request $request){
-        $user = $request->user();
+        if($request->input('user_id')!=null)
+            $user = User::find($request->input('user_id'));
+        else
+            $user = $request->user();
         $profile = Profile::where('user_id', $user->id)->first();
         return[
             'profile' => $profile,
             'user' => $user,
             'status' => 'ok'
         ];
+    }
+
+    public function getCourses(Request $request){
+        return(['courses' => Course::find($request->input('user_id'))]);
     }
 }

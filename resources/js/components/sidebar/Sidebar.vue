@@ -13,6 +13,9 @@
                 <div class="bg-dark border rounded-3 pb-0 p-3 w-100">
                     <!-- Dashboard menu -->
                     <div class="list-group list-group-dark list-group-borderless">
+                        <router-link to="/slots"><a v-bind:class="{active : isActive.compile}" class="list-group-item"><i class="bi bi-ui-checks-grid fa-fw me-2"></i>Слоты(админка)</a></router-link>
+                        <router-link to="/myslots"><a v-bind:class="{active : isActive.compile}" class="list-group-item"><i class="bi bi-ui-checks-grid fa-fw me-2"></i>Мои слоты</a></router-link>
+                        <router-link to="/compile"><a v-bind:class="{active : isActive.compile}" class="list-group-item"><i class="bi bi-ui-checks-grid fa-fw me-2"></i>Компилятор</a></router-link>
                         <router-link to="/"><a v-bind:class="{active : isActive.home}" class="list-group-item"><i class="bi bi-ui-checks-grid fa-fw me-2"></i>Показатели</a></router-link>
                         <router-link to="/courses"><a v-bind:class="{active : isActive.courses}" class="list-group-item"><i class="bi bi-card-checklist fa-fw me-2"></i>Мои курсы</a></router-link>
 <!--                        <a class="list-group-item" href="student-course-list.html"><i class="bi bi-basket fa-fw me-2"></i>My Courses</a>-->
@@ -23,7 +26,7 @@
                         <router-link to="/profile"><a v-bind:class="{active : isActive.profile}" class="list-group-item"><i class="bi bi-pencil-square fa-fw me-2"></i>Редактировать профиль</a></router-link>
 <!--                        <a class="list-group-item" href="instructor-setting.html"><i class="bi bi-gear fa-fw me-2"></i>Settings</a>-->
 <!--                        <a class="list-group-item" href="instructor-delete-account.html"><i class="bi bi-trash fa-fw me-2"></i>Delete Profile</a>-->
-                        <a @click="logout" class="list-group-item text-danger bg-danger-soft-hover"><i class="fas fa-sign-out-alt fa-fw me-2"></i>Выйти</a>
+                        <a @click="logout" class="list-group-item text-danger bg-danger-soft-hover click"><i class="fas fa-sign-out-alt fa-fw me-2"></i>Выйти</a>
                     </div>
                 </div>
             </div>
@@ -31,6 +34,7 @@
         <!-- Responsive offcanvas body END -->
     </div>
     <!-- Left sidebar END -->
+<!--    kk-->
 </template>
 
 <script>
@@ -64,7 +68,8 @@ export default {
                     home : true,
                     courses : false,
                     homeworks : false,
-                    profile : false
+                    profile : false,
+                    compile : false
                 }
             }
             else if(this.$route.path === '/courses'){
@@ -72,7 +77,8 @@ export default {
                     home : false,
                     courses : true,
                     homeworks : false,
-                    profile : false
+                    profile : false,
+                    compile : false
                 }
             }
             else if(this.$route.path === '/homeworks'){
@@ -80,7 +86,8 @@ export default {
                     home : false,
                     courses : false,
                     homeworks : true,
-                    profile : false
+                    profile : false,
+                    compile : false
                 }
             }
             else if(this.$route.path === '/profile'){
@@ -88,7 +95,17 @@ export default {
                     home : false,
                     courses : false,
                     homeworks : false,
-                    profile : true
+                    profile : true,
+                    compile : false
+                }
+            }
+            else if(this.$route.path === '/compile'){
+                return {
+                    home : false,
+                    courses : false,
+                    homeworks : false,
+                    profile : false,
+                    compile : true
                 }
             }
             else{

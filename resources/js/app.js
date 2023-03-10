@@ -38,7 +38,9 @@ import axios from "axios";
 import store from "./store";
 import Vuetify from './plugins/vuetify'
 import moment from 'moment'
+import Vuelidate from 'vuelidate'
 
+Vue.use(Vuelidate)
 
 
 axios.defaults.showLoader = true;
