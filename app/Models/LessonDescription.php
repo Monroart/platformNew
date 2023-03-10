@@ -19,4 +19,9 @@ class LessonDescription extends Model
     {
         return $this->hasMany(LessonFiles::class);
     }
+
+    public function lesson()
+    {
+        return $this->belongsTo(Lesson::class);
+    }
 }
