@@ -5,33 +5,56 @@
                 <div class="modal">
                     <header class="modal-header">
                         <slot name="header">
-                            This is the default title!
+                            <label>Создание уроков</label>
                         </slot>
                         <button
                             type="button"
                             class="btn-close"
                             @click="close"
                         >
-
                         </button>
                     </header>
 
                     <section class="modal-body">
                         <slot name="body">
-                            This is the default body!
+                            <div class="container">
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <label class="form-label">Номер урока</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label">Запись урока</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label">Материал урока</label>
+                                        <div class="input-group">
+                                            <vue-multiselect track-by="subject_id" class="multiselect" placeholder="Выберите" selectLabel="Выберите" deselectLabel="Убрать" v-model="lesson_materials.value" :options="lesson_materials.options"></vue-multiselect>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label">Дата урока</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </slot>
                     </section>
 
                     <footer class="modal-footer">
-                        <slot name="footer">
-                            This is the default footer!
-                        </slot>
                         <button
                             type="button"
-                            class="btn-green"
+                            class="btn btn-primary-soft btn-sm"
                             @click="close"
                         >
-                            Close Modal
+                            Закрыть
                         </button>
                     </footer>
                 </div>
@@ -41,17 +64,40 @@
 </template>
 
 <script>
+import Multiselect from 'vue-multiselect'
 export default {
     name: "CreateLessonModal",
+    components: {
+        'vue-multiselect' : Multiselect
+    },
+    data(){
+        return {
+            lesson_materials: {
+                value: null,
+                options: ['Kek', 'lol']
+            }
+        }
+    },
     methods: {
         close() {
             this.$emit('close');
         },
+        getLessonsMaterials(){
+            axios.post('api/courses/getLessonsMaterials', {}).then(res => {
+                this.lesson_materials.value = res.data.lesson_materials[0]
+                this.lesson_materials.options = res.data.lesson_materials
+            });
+        }
     },
+    mounted() {
+        this.getLessonsMaterials()
+    }
 }
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style scoped>
+
 .modal-backdrop {
     position: fixed;
     top: 0;
@@ -79,10 +125,9 @@ export default {
 }
 
 .modal-header {
+    justify-content: center;
     position: relative;
-    border-bottom: 1px solid #eeeeee;
-    color: #4AAE9B;
-    justify-content: space-between;
+    border-bottom: 10px solid #eeeeee;
 }
 
 .modal-footer {
@@ -124,5 +169,12 @@ export default {
 .modal-fade-enter-active,
 .modal-fade-leave-active {
     transition: opacity .5s ease;
+}
+.modal{
+    position: absolute;
+    left: 27%;
+    top: 20%;
+    width: 50%;
+    height: 50%;
 }
 </style>
