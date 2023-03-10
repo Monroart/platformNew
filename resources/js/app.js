@@ -37,14 +37,10 @@ import router from "./router";
 import axios from "axios";
 import store from "./store";
 import Vuetify from './plugins/vuetify'
-import VueMoment from 'vue-moment'
 import moment from 'moment'
-import VueGoodTablePlugin from 'vue-good-table';
 import Vuelidate from 'vuelidate'
 
 Vue.use(Vuelidate)
-Vue.use(VueMoment)
-Vue.use(VueGoodTablePlugin)
 
 
 axios.defaults.showLoader = true;

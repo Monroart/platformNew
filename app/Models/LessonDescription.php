@@ -10,10 +10,18 @@ class LessonDescription extends Model
     use HasFactory;
 
     protected $fillable = [
-        'file',
-        'file_type',
         'comment',
         'user_id',
         'lesson_id'
     ];
+
+    public function files()
+    {
+        return $this->hasMany(LessonFiles::class);
+    }
+
+    public function lesson()
+    {
+        return $this->belongsTo(Lesson::class);
+    }
 }

@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Course;
 use App\Http\Controllers\Controller;
 use App\Models\CourseUser;
 use App\Models\Lesson;
+use App\Models\SubjectMaterial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CourseCountroller extends Controller
+class CourseController extends Controller
 {
     public function getMyCourses(Request $request){
         $user = $request->user();
@@ -33,5 +34,11 @@ class CourseCountroller extends Controller
             ->get();
 
         return ['lessons' => $lessons];
+    }
+
+    public function getLessonsMaterials(Request $request){
+        return [
+            'lesson_materials' => SubjectMaterial::query()->get()
+        ];
     }
 }

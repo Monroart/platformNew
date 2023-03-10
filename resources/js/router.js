@@ -1,7 +1,5 @@
 import vueRouter from 'vue-router';
 import Vue from 'vue';
-import store from "./store";
-
 
 Vue.use(vueRouter);
 
@@ -81,16 +79,12 @@ router.beforeEach(( to, from, next) => {
         return next('/')
     }
 
-    if(token) {
-        store.dispatch('auth/login', false)
-    }
-
     next()
 })
 
 router.afterEach(
     ( to, from) =>{
-
+        //
     }
 )
 

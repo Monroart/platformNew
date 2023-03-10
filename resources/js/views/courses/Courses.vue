@@ -42,6 +42,7 @@
 <script>
 import moment from 'moment'
 import {getDayOfWeek} from "../../utils";
+import {mapActions} from "vuex";
 export default {
     name: "Courses",
 
@@ -51,6 +52,10 @@ export default {
         }
     },
     methods:{
+        ...mapActions({
+            startLoading: "loading/startLoading",
+            endLoading: "loading/endLoading",
+        }),
         getMyCourses(){
             axios.post('api/courses/getCourse').then(res =>{
                 this.courses = res.data.courses
@@ -71,7 +76,9 @@ export default {
         }
     },
     mounted() {
+        this.startLoading()
         this.getMyCourses()
+        this.endLoading()
     }
 }
 </script>

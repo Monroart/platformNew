@@ -8,7 +8,7 @@
                 <!-- Title -->
                 <div class="d-flex justify-content-between mb-3">
                     <h5 >Курс {{course_name}}</h5>
-                    <a class="btn btn-primary-soft btn-sm">Создать урок</a>
+                    <a @click="showModal" class="btn btn-primary-soft btn-sm">Создать урок</a>
                 </div>
 
 
@@ -30,6 +30,10 @@
             </div>
         </div>
         </v-app>
+        <create-lesson-modal
+            v-show="isModalVisible"
+            @close="closeModal">
+        </create-lesson-modal>
     </div>
 </template>
 
@@ -37,17 +41,20 @@
 import moment from "moment";
 import LessonsView from "../../components/lessons/LessonsView";
 import {mapState} from "vuex";
+import CreateLessonModal from "../../components/lessons/CreateLessonModal";
 
 export default {
     name: "CourseView",
     components: {
+        CreateLessonModal,
         'lesson-view' : LessonsView
     },
     props: ['course_id', 'course_name', 'course_length'],
     data(){
         return {
             lessons: null,
-            value: 10
+            value: 10,
+            isModalVisible: false
         }
     },
     computed: {
@@ -67,6 +74,12 @@ export default {
             }).then(res => {
                 this.lessons = res.data.lessons
             });
+        },
+        showModal(){
+            this.isModalVisible = true
+        },
+        closeModal(){
+            this.isModalVisible = false
         }
     },
     mounted() {

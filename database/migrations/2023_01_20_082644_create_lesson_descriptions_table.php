@@ -15,9 +15,8 @@ class CreateLessonDescriptionsTable extends Migration
     {
         Schema::create('lesson_descriptions', function (Blueprint $table) {
             $table->id();
-            $table->text('file');
-            $table->string('file_type');
             $table->text('comment');
+            $table->string('status', 50);
 
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')

@@ -21,9 +21,10 @@ Route::group(['prefix' => '/test'], function (){
 });
 
 Route::group(['middleware'=>'auth:sanctum',  'prefix' => '/courses'], function (){
-    Route::post('/getCourse', [\App\Http\Controllers\Course\CourseCountroller::class, 'getMyCourses']);
+    Route::post('/getCourse', [\App\Http\Controllers\Course\CourseController::class, 'getMyCourses']);
     Route::post('/getInfoForHeader', [\App\Http\Controllers\Header\HeaderController::class, 'index']);
-    Route::post('/getLessonsByCourse', [\App\Http\Controllers\Course\CourseCountroller::class, 'getCourseLessons']);
+    Route::post('/getLessonsByCourse', [\App\Http\Controllers\Course\CourseController::class, 'getCourseLessons']);
+    Route::post('/getLessonsMaterials', [\App\Http\Controllers\Course\CourseController::class, 'getLessonsMaterials']);
 });
 
 
@@ -37,7 +38,11 @@ Route::group(['middleware'=>'auth:sanctum',  'prefix' => '/profile'], function (
 });
 
 Route::group(['middleware'=>'auth:sanctum',  'prefix' => '/homeworks'], function (){
-
+    Route::post('lessons/getById', [\App\Http\Controllers\Homework\StudentHomeworkController::class, 'getLessonInfo']);
+    Route::post('lessons/getDescription', [\App\Http\Controllers\Homework\StudentHomeworkController::class, 'getHomework']);
+    Route::post('lessons/createComment', [\App\Http\Controllers\Homework\StudentHomeworkController::class, 'createComment']);
+    Route::post('coursesList', [\App\Http\Controllers\Homework\StudentHomeworkController::class, 'courseList']);
+    Route::post('lessonsList', [\App\Http\Controllers\Homework\StudentHomeworkController::class, 'lessonsList']);
 });
 
 Route::group(['middleware'=>'auth:sanctum',  'prefix' => '/users'], function (){

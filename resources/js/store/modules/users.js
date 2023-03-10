@@ -31,6 +31,13 @@ export default {
             }
         },
 
+        getRoleNameByUserId: state => {
+          return function (id) {
+              let user_role = state.users.find(item => item.id === id).role_id
+              return state.roles.find(role => role.id === user_role).eng_name
+          }
+        },
+
         getAllUsers(state) {
             return state.users
         }
