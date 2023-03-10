@@ -5,13 +5,14 @@
         </div>
 
         <div v-if="$store.getters['users/getRoleNameByUserId']($store.getters['auth/user'].id) === 'teacher'" class="card border bg-transparent rounded-3">
-            qq teacher
+            <teacher-homework-courses-list></teacher-homework-courses-list>
         </div>
     </div>
 </template>
 
 <script>
 import HomeworkCoursesList from "../../components/homeworks/HomeworkCoursesList.vue";
+import TeacherHomeworkCoursesList from "../../components/homeworks/TeacherHomeworkCoursesList.vue";
 export default {
     name: "Homeworks",
 
@@ -21,7 +22,7 @@ export default {
         }
     },
 
-    components: {HomeworkCoursesList},
+    components: {HomeworkCoursesList, TeacherHomeworkCoursesList},
 }
 </script>
 
