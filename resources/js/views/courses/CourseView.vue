@@ -31,6 +31,7 @@
         </div>
         </v-app>
         <create-lesson-modal
+            :course_id="course_id"
             v-show="isModalVisible"
             @close="closeModal">
         </create-lesson-modal>
@@ -80,6 +81,7 @@ export default {
         },
         closeModal(){
             this.isModalVisible = false
+            this.getLessonsByCourse()
         }
     },
     mounted() {
