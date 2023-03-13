@@ -25,6 +25,7 @@ Route::group(['middleware'=>'auth:sanctum',  'prefix' => '/courses'], function (
     Route::post('/getInfoForHeader', [\App\Http\Controllers\Header\HeaderController::class, 'index']);
     Route::post('/getLessonsByCourse', [\App\Http\Controllers\Course\CourseController::class, 'getCourseLessons']);
     Route::post('/getLessonsMaterials', [\App\Http\Controllers\Course\CourseController::class, 'getLessonsMaterials']);
+    Route::post('/createLesson', [\App\Http\Controllers\Course\CourseController::class, 'createLesson']);
 });
 
 

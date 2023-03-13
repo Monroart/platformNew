@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Course;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\CourseUser;
 use App\Models\Lesson;
 use App\Models\SubjectMaterial;
@@ -37,8 +38,35 @@ class CourseController extends Controller
     }
 
     public function getLessonsMaterials(Request $request){
+        $course = Course::query()->find($request->course_id);
         return [
-            'lesson_materials' => SubjectMaterial::query()->get()
+            'lesson_materials' => SubjectMaterial::query()->where('subject_id', $course->subject_id)->get()
+        ];
+    }
+
+    public function createLesson(Request $request){
+        $data = (object)$request->input();
+
+        return $data->lesson_date;
+        try{
+            Lesson::query()->create([
+                'lesson_number' => $data->lesson_number,
+                'lesson_recording' => $data->lesson_record,
+                'date' => $data->lesson_date,
+                'subject_material_id' => $data->lesson_material,
+                'course_id' => $data->course_id,
+//                'substitute_teacher_id',
+//                'homework_id'
+            ]);
+        }
+        catch (\Exception $e){
+            return [
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ];
+        }
+        return [
+            'status' => 'ok',
         ];
     }
 }
