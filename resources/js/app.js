@@ -39,11 +39,15 @@ import store from "./store";
 import Vuetify from './plugins/vuetify'
 import moment from 'moment'
 import Vuelidate from 'vuelidate'
+import VueMoment from 'vue-moment'
+import VueChatScroll from 'vue-chat-scroll'
 
 Vue.use(Vuelidate)
+Vue.use(VueMoment)
+Vue.use(VueChatScroll)
 
+axios.defaults.showLoader = false;
 
-axios.defaults.showLoader = true;
 const app = new Vue({
     el: '#app',
     vuetify: Vuetify,
