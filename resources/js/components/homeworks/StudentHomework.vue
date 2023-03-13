@@ -2,11 +2,11 @@
     <div class="col-md-9">
 
 <!--        teacher lesson-->
-        <div class="border p-2 p-sm-4 rounded-3">
+        <div class="border p-2 p-sm-3 rounded-3">
 
             <!-- Card header START -->
             <div class="card-header border-bottom">
-                <h3 v-if="lesson.lesson_number" class="mb-0">{{ 'Lesson ' + lesson.lesson_number }}</h3>
+                <h5 v-if="lesson.lesson_number" class="mb-0">{{ 'Lesson ' + lesson.lesson_number }}</h5>
             </div>
             <!-- Card header END -->
 
@@ -18,14 +18,14 @@
                         <!-- Curriculum item -->
                         <h6 class="mb-1">{{ lesson.theme }}</h6>
 
-                        <div class="hstack gap-3 mb-4">
+                        <div class="hstack gap-3 mb-2">
                             <span class="text-dark"><i class="far fa-clock text-danger me-2"></i>{{ lesson.date }}</span>
-                            <span class="text-dark"><i class="fas fa-table text-orange me-2"></i>{{ lesson.teacher }}</span>
+                            <span class="text-dark"><i class="fas fa-fw fa-user-clock text-primary"></i>{{ ' ' + lesson.teacher }}</span>
                         </div>
                         <!-- Text -->
                         <div class="d-sm-flex justify-content-sm-between align-items-center">
                             <div v-if="lesson.text" class="d-flex">
-                                <div class="ms-2 ms-sm-3 mt-1 mt-sm-0 mb-3">
+                                <div class="ms-1 ms-sm-2 mt-1 mt-sm-0 mb-2">
                                     <p class="my-auto">{{ lesson.text }}</p>
                                 </div>
                             </div>
@@ -57,22 +57,9 @@
         </div>
 <!--        end teacher lesson-->
 
-        <div class="d-flex mt-4">
-            <div data-app class="d-flex px-2 mb-0">
-                <v-file-input
-                    v-model="files"
-                    multiple
-                    prepend-icon="mdi-paperclip"
-                >
-                </v-file-input>
-            </div>
-            <textarea v-model="comment" class="form-control mb-0 shadow-hover" rows="0" spellcheck="false"></textarea>
-            <button @click="sendForm" class="btn btn-sm btn-primary-soft ms-2 px-4 mb-0 flex-shrink-0"><i class="fas fa-paper-plane fs-8"></i></button>
-        </div>
-
 <!--        Discussion-->
-        <div class="border p-2 p-sm-4 rounded-3 mb-4 mt-4 ">
-            <ul class="list-unstyled mb-0">
+        <div class="border p-2 p-sm-4 rounded-3 mb-4 mt-4 h-500px overflow-auto" ref="scroll">
+            <ul class="list-unstyled mb-0" v-chat-scroll="{ always: true, smooth: true }" style="flex-grow: 1">
                 <li class="comment-item" v-for="comment in description" :class="{'ms-4': $store.getters['users/getById'](comment.user_id).role_id === 1}">
                     <div class="d-flex mb-3">
                         <!-- Avatar -->
@@ -125,6 +112,19 @@
             </ul>
         </div>
 
+        <div class="d-flex mt-4">
+            <div data-app class="d-flex px-2 mb-0">
+                <v-file-input
+                    v-model="files"
+                    multiple
+                    prepend-icon="mdi-paperclip"
+                >
+                </v-file-input>
+            </div>
+            <textarea v-model="comment" class="form-control mb-0 shadow-hover" rows="0" spellcheck="false"></textarea>
+            <button @click="sendForm" class="btn btn-sm btn-primary-soft ms-2 px-4 mb-0 flex-shrink-0"><i class="fas fa-paper-plane fs-8"></i></button>
+        </div>
+
 
     </div>
 </template>
@@ -163,6 +163,7 @@ export default {
                 .then((res) => {
                     this.description = res.data
                     this.loadingDescription = false
+
                 })
         },
 
@@ -190,6 +191,9 @@ export default {
                     this.comment = null
                     this.files = null
                     this.loadLessonDescription()
+                    setTimeout(() => {
+                        this.$refs.scroll.scrollTo(0, 99999)
+                    }, 1400)
                 }
             }))
         }
@@ -198,6 +202,13 @@ export default {
     mounted() {
         this.loadLessonInfo()
         this.loadLessonDescription()
+        this.$nextTick(() => {
+            let elem = this.$refs.scroll
+            setTimeout(() => {
+                elem.scrollTo(0, 99999)
+            }, 1400)
+        })
+
     }
 }
 </script>

@@ -41,9 +41,14 @@ import moment from 'moment'
 import Vuelidate from 'vuelidate'
 import 'vue2-datepicker/locale/ru';
 
-Vue.use(Vuelidate)
+import VueMoment from 'vue-moment'
+import VueChatScroll from 'vue-chat-scroll'
 
-axios.defaults.showLoader = true;
+Vue.use(Vuelidate)
+Vue.use(VueMoment)
+Vue.use(VueChatScroll)
+
+
 const app = new Vue({
     el: '#app',
     vuetify: Vuetify,
