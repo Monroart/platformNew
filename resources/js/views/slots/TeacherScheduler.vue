@@ -49,6 +49,7 @@
                           <ul
                             class="dropdown-menu bg-light-gray shadow-hover"
                             aria-labelledby="dropdownMenuButton1"
+                            ref="dropdown"
                           >
                               <li class="dropdown-item text-center">
                                 <button
@@ -134,6 +135,9 @@ export default {
       },
 
       saveToSchedule(day, interval_id, type) {
+        this.$refs.dropdown.forEach((i) => {
+          i.classList.remove('show')
+        })
         this.showLessonMenu = false
         axios.post('api/slots/set', {
           slot: {
