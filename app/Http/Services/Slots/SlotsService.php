@@ -63,7 +63,7 @@ class SlotsService
                         'type'            => self::CAN_TYPE
                     ]);
                     break;
-                case self::CAN_TYPE:
+                case self::LESSON_TYPE:
                     //tODO
                     break;
                 case self::REMOVE_TYPE:
