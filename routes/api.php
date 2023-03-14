@@ -26,6 +26,12 @@ Route::group(['middleware'=>'auth:sanctum',  'prefix' => '/courses'], function (
     Route::post('/getLessonsByCourse', [\App\Http\Controllers\Course\CourseController::class, 'getCourseLessons']);
     Route::post('/getLessonsMaterials', [\App\Http\Controllers\Course\CourseController::class, 'getLessonsMaterials']);
     Route::post('/createLesson', [\App\Http\Controllers\Course\CourseController::class, 'createLesson']);
+    Route::post('/dropLesson', [\App\Http\Controllers\Course\CourseController::class, 'dropLesson']);
+});
+
+Route::group(['middleware'=>'auth:sanctum',  'prefix' => '/lesson/visits'], function (){
+    Route::post('/changeLessonVisits', [\App\Http\Controllers\LessonVisits\LessonVisitsController::class, 'changeLessonVisits']);
+    Route::post('/getLessonVisits', [\App\Http\Controllers\LessonVisits\LessonVisitsController::class, 'getLessonVisits']);
 });
 
 

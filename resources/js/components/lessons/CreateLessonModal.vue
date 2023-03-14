@@ -22,7 +22,7 @@
                                     <div class="col-6">
                                         <label class="form-label">Номер урока</label>
                                         <div class="input-group input-group-sm">
-                                            <input v-model="lesson_number" type="number" class="form-control">
+                                            <input min="0" v-model="lesson_number" type="number" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -40,7 +40,7 @@
                                     <div class="col-6">
                                         <label class="form-label">Дата урока</label>
                                         <div class="input-group">
-                                            <date-picker value-type="YYYY-MM-DD HH:MM:SS" type="datetime" v-model ="lesson_date"></date-picker>
+                                            <date-picker valueType="YYYY-MM-DD HH:mm:ss" format="YYYY-MM-DD HH:mm:ss" type="datetime" v-model ="lesson_date"></date-picker>
                                         </div>
                                     </div>
                                 </div>
@@ -106,7 +106,6 @@ export default {
             });
         },
         createLesson(){
-            console.log(this.lesson_date);
             axios.post('api/courses/createLesson',  {
                 course_id : this.course_id,
                 lesson_record : this.lesson_record,

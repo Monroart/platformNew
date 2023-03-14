@@ -42,11 +42,11 @@ import Vuelidate from 'vuelidate'
 import 'vue2-datepicker/locale/ru';
 
 import VueMoment from 'vue-moment'
-import VueChatScroll from 'vue-chat-scroll'
+
 
 Vue.use(Vuelidate)
 Vue.use(VueMoment)
-Vue.use(VueChatScroll)
+
 
 
 const app = new Vue({

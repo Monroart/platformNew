@@ -47,7 +47,7 @@ class CourseController extends Controller
     public function createLesson(Request $request){
         $data = (object)$request->input();
 
-        return $data->lesson_date;
+
         try{
             Lesson::query()->create([
                 'lesson_number' => $data->lesson_number,
@@ -68,5 +68,13 @@ class CourseController extends Controller
         return [
             'status' => 'ok',
         ];
+    }
+
+    public function dropLesson(Request $request){
+        $lesson_id = $request->input('lesson_id');
+
+        Lesson::query()->where('id', $lesson_id)->delete();
+
+        return ['status' => 'ok'];
     }
 }
