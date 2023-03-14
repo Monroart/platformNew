@@ -14,14 +14,26 @@ class CourseController extends Controller
 {
     public function getMyCourses(Request $request){
         $user = $request->user();
-        $courses = CourseUser::query()
-            ->select('courses.*', 'subjects.name as subject_name', 'subjects.subject_image', 'subjects.course_length')
-            ->leftJoin('courses', 'courses.id', '=', 'course_users.course_id')
-            ->leftJoin('subjects', 'courses.subject_id','=', 'subjects.id')
-            ->where('course_users.user_id', '=', $user->id)
-            ->get();
 
-        return ['courses'=>$courses];
+        if($user->role_id == 2){
+            $courses = CourseUser::query()
+                ->select('courses.*', 'subjects.name as subject_name', 'subjects.subject_image', 'subjects.course_length')
+                ->leftJoin('courses', 'courses.id', '=', 'course_users.course_id')
+                ->leftJoin('subjects', 'courses.subject_id','=', 'subjects.id')
+                ->where('course_users.user_id', '=', $user->id)
+                ->get();
+
+            return ['courses'=>$courses];
+        }
+        elseif ($user->role_id == 1){
+            $courses = Course::query()
+                ->select('courses.*', 'subjects.name as subject_name', 'subjects.subject_image', 'subjects.course_length')
+                ->leftJoin('subjects', 'courses.subject_id','=', 'subjects.id')
+                ->where('courses.default_teacher_id', '=', $user->id)
+                ->get();
+
+            return ['courses'=>$courses];
+        }
     }
 
     public function getCourseLessons(Request $request){

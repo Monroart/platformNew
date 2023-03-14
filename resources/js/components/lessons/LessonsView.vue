@@ -164,14 +164,16 @@ export default {
             axios.post('api/lesson/visits/getLessonVisits', {
                 lesson_id: this.lesson.lesson_id
             }).then(res => {
-                if(res.data.status === 'ok'){
+                if(res.data.status === 'ok' && res.data.visits.length > 0){
                     const values = [];
 
                     res.data.visits.forEach(user_id =>{
                         const res = this.$store.getters["users/getByCourseId"](parseInt(this.course_id)).find(user => {
                             return user.id === user_id
                         })
-                        values.push(res)
+                        if(res !== undefined){
+                            values.push(res)
+                        }
                     })
 
                     this.students.values = values
