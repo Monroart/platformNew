@@ -52,11 +52,16 @@ class SlotsService
                         'teacher_id'      => $teacher_id,
                         'day_of_the_week' => $slot['day'],
                         'period_id'       => $slot['interval_id'],
-                        'type'            => 'open'
+                        'type'            => self::OPEN_TYPE
                     ]);
                     break;
-                case self::LESSON_TYPE:
-                    //TODO
+                case self::CAN_TYPE:
+                    TeacherSlot::create([
+                        'teacher_id'      => $teacher_id,
+                        'day_of_the_week' => $slot['day'],
+                        'period_id'       => $slot['interval_id'],
+                        'type'            => self::CAN_TYPE
+                    ]);
                     break;
                 case self::CAN_TYPE:
                     //tODO
@@ -67,12 +72,6 @@ class SlotsService
                 default:
                     return $this->returnError('Не верный тип');
             }
-
-            TeacherSlot::create([
-                'teacher_id'      => $teacher_id,
-                'day_of_the_week' => $slot['day'],
-                'period_id'       => $slot['interval_id']
-            ]);
 
             return ['status' => 'ok'];
 

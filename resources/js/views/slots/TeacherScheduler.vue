@@ -29,6 +29,12 @@
 <!--                          Ничего не выбрано-->
                             <span
                               class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size13 xs-font-size13"
+                              :class="{
+                                'bg-sky': !getSlot(number, interval.id),
+                                'bg-green': getSlot(number, interval.id) && getSlot(number, interval.id)['type'] === 'open',
+                                'bg-yellow': getSlot(number, interval.id) && getSlot(number, interval.id)['type'] === 'can',
+                                'bg-orange': getSlot(number, interval.id) && getSlot(number, interval.id)['type'] === 'lesson'
+                              }"
                               :ref="'column' + day + interval.id"
                               id="dropdownMenuButton1"
                               data-bs-toggle="dropdown"
@@ -37,7 +43,7 @@
                               @mouseenter="setHover(day, interval.id)"
                               @mouseleave="unsetHover(day, interval.id)"
                             >
-                              {{ !getSlot(number, interval.id) ? 'Free' : 'Open' }}
+                              {{ getButtonText(number, interval.id) }}
                             </span>
 
                           <ul
@@ -53,14 +59,10 @@
                               </li>
 
                               <li class="dropdown-item text-center">
-                                <button class="btn btn-sm btn-blue-soft">
+                                <button
+                                  @click="saveToSchedule(number, interval.id, 'can')"
+                                  class="btn btn-sm btn-blue-soft">
                                   Готовность подменить
-                                </button>
-                              </li>
-
-                              <li class="dropdown-item text-center">
-                                <button class="btn btn-sm btn-blue-soft" @click="showLessonMenu = true">
-                                  Урок
                                 </button>
                               </li>
 
@@ -71,6 +73,16 @@
                                   <option value="2">Two</option>
                                   <option value="3">Three</option>
                                 </select>
+                              </li>
+
+                              <li class="dropdown-item text-center">
+                                <button v-if="!showLessonMenu" class="btn btn-sm btn-blue-soft" @click="showLessonMenu = true">
+                                  Урок
+                                </button>
+
+                                <button v-if="showLessonMenu" class="btn btn-sm btn-blue-soft" @click="showLessonMenu = true">
+                                  Сохранить
+                                </button>
                               </li>
 
                             <li class="dropdown-item text-center">
@@ -122,12 +134,14 @@ export default {
       },
 
       saveToSchedule(day, interval_id, type) {
-        console.log(day + ' ' + interval_id)
+        this.showLessonMenu = false
         axios.post('api/slots/set', {
           slot: {
             day, interval_id, type
           }
         })
+
+        this.loadSlots()
       },
 
       getSlot(day, period_id) {
@@ -142,6 +156,21 @@ export default {
       unsetHover(day, period_id) {
         let name = 'column' + day + period_id
         this.$refs[name][0].classList.remove('hover-opacity')
+      },
+
+      getButtonText(day, period_id) {
+        let slot = this.getSlot(day, period_id)
+
+        if (!slot)
+          return 'Free'
+        else if (slot.type === 'open')
+          return 'Открыт'
+        else if (slot.type === 'can')
+          return 'Подхват'
+        else if (slot.type === 'lesson') {
+          return 'Хз'
+        }
+
       }
     },
     created() {
