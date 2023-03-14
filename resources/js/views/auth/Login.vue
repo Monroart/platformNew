@@ -168,6 +168,7 @@ export default {
                     }).catch(err => {
                         this.endLoading();
                         console.log(err.response)
+                        this.endLoading()
                     })
                 })
                 this.$router.replace({
