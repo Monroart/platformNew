@@ -41,9 +41,14 @@ import moment from 'moment'
 import Vuelidate from 'vuelidate'
 import 'vue2-datepicker/locale/ru';
 
-Vue.use(Vuelidate)
+import VueMoment from 'vue-moment'
 
-axios.defaults.showLoader = true;
+
+Vue.use(Vuelidate)
+Vue.use(VueMoment)
+
+
+
 const app = new Vue({
     el: '#app',
     vuetify: Vuetify,
