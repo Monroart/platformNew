@@ -12,6 +12,7 @@ import Compiler from "./views/compiler/Compiler";
 import CourseView from "./views/courses/CourseView";
 import StudentHomework from "./components/homeworks/StudentHomework";
 import TeachersSlots from "./views/teachers/TeachersSlots";
+import TeacherScheduler from "./views/slots/TeacherScheduler.vue";
 
 const routes = [
     {
@@ -55,6 +56,10 @@ const routes = [
         path: '/myslots',
         component: TeachersSlots
     },
+    {
+        path: '/slots',
+        component: TeacherScheduler
+    }
 ];
 
 const router = new vueRouter({

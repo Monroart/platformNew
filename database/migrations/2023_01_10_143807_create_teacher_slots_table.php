@@ -20,12 +20,12 @@ class CreateTeacherSlotsTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->integer('subject_id')->unsigned()->index();
+            $table->integer('subject_id')->unsigned()->index()->default(0);
             $table->foreign('subject_id')->references('id')->on('subjects')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->integer('course_id')->unsigned()->index();
+            $table->integer('course_id')->unsigned()->index()->default(0);
             $table->foreign('course_id')->references('id')->on('courses')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
