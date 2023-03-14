@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-9">
+    <div :class="width >= '1200' ? 'col-md-9' : 'col-md-12' " >
         <!-- Edit profile START -->
         <div class="card bg-transparent border rounded-3">
             <!-- Card header -->
@@ -33,7 +33,7 @@
                     </div>
 
                     <!-- Full name -->
-                    <div class="col-6">
+                    <div class="col-md-6">
                         <label class="form-label">Имя и Фамилия</label>
                         <div class="input-group">
                             <input type="text" class="form-control" v-model="user.name">
@@ -59,13 +59,13 @@
                     </div>
 
                     <!-- Education -->
-                    <div class="col-6">
+                    <div class="col-md-6">
                         <label class="form-label">Образование</label>
                         <input class="form-control mb-2" type="text" v-model="profile.education">
                     </div>
 
                     <!-- About me -->
-                    <div class="col-6">
+                    <div class="col-md-6">
                         <label class="form-label">Обо мне</label>
                         <textarea class="form-control" v-model="profile.about" rows="3"></textarea>
                         <div class="form-text">Какие у тебя увлечения?</div>
@@ -88,6 +88,7 @@
 export default {
     data(){
         return{
+            width: window.innerWidth,
             avatar: null,
             status_file: false,
 

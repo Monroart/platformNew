@@ -1,5 +1,5 @@
 <template>
-    <section v-if="authenticated" class="pt-0">
+    <section v-if="authenticated" class="pt-0 p-0">
         <div class="container-fluid px-0">
             <div class="card bg-blue h-100px h-md-200px rounded-0" style="background:url(assets/images/pattern/04.png) no-repeat center center; background-size:cover;">
             </div>
@@ -42,9 +42,8 @@
                     <!-- Advanced filter responsive toggler START -->
                     <!-- Divider -->
                     <hr class="d-xl-none">
-                    <div class="col-12 col-xl-3 d-flex justify-content-between align-items-center">
-                        <a class="h6 mb-0 fw-bold d-xl-none" href="#">Menu</a>
-                        <button class="btn btn-primary d-xl-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
+                    <div class="col-12 col-xl-3 d-flex justify-content-center align-items-center">
+                        <button class="btn btn-primary text-white d-xl-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
                             <i class="fas fa-sliders-h"></i>
                         </button>
                     </div>
