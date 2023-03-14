@@ -1,7 +1,7 @@
 <template>
     <section v-if="authenticated" class="pt-0 p-0">
         <div class="container-fluid px-0">
-            <div class="card bg-blue h-100px h-md-200px rounded-0" style="background:url(assets/images/pattern/04.png) no-repeat center center; background-size:cover;">
+            <div class="card bg-blue h-100px h-md-200px gvghvgvgvghvgh rounded-0" style="background:url(assets/images/pattern/04.png) no-repeat center center; background-size:cover;">
             </div>
         </div>
         <div class="container mt-n4">
