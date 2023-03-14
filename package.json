@@ -30,6 +30,7 @@
         "jquery": "^3.6.4",
         "moment": "^2.29.4",
         "moment-timezone": "^0.5.41",
+        "vue-chat-scroll": "^1.4.0",
         "vue-day-schedule": "^0.2.6",
         "vue-good-table": "^2.21.11",
         "vue-moment": "^4.1.0",

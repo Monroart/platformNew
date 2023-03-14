@@ -21,26 +21,26 @@
                                 <div class="row g-2">
                                     <div class="col-6">
                                         <label class="form-label">Номер урока</label>
-                                        <div class="input-group">
-                                            <input type="number" class="form-control">
+                                        <div class="input-group input-group-sm">
+                                            <input min="0" v-model="lesson_number" type="number" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Запись урока</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control">
+                                        <div class="input-group input-group-sm">
+                                            <input v-model="lesson_record" type="text" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Материал урока</label>
-                                        <div class="input-group">
-                                            <vue-multiselect track-by="subject_id" class="multiselect" placeholder="Выберите" selectLabel="Выберите" deselectLabel="Убрать" v-model="lesson_materials.value" :options="lesson_materials.options"></vue-multiselect>
+                                        <div v-if="lesson_materials.options" class="input-group input-group-sm">
+                                            <vue-multiselect label = "name" class="multiselect" placeholder="Выберите" selectLabel="Выберите" deselectLabel="Убрать" v-model="lesson_materials.value" :options="lesson_materials.options"></vue-multiselect>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Дата урока</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control">
+                                            <date-picker valueType="YYYY-MM-DD HH:mm:ss" format="YYYY-MM-DD HH:mm:ss" type="datetime" v-model ="lesson_date"></date-picker>
                                         </div>
                                     </div>
                                 </div>
@@ -56,6 +56,14 @@
                         >
                             Закрыть
                         </button>
+
+                        <button
+                            type="button"
+                            class="btn btn-primary-soft btn-sm"
+                            @click="createLesson"
+                        >
+                            Создать
+                        </button>
                     </footer>
                 </div>
             </div>
@@ -65,27 +73,49 @@
 
 <script>
 import Multiselect from 'vue-multiselect'
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 export default {
     name: "CreateLessonModal",
     components: {
+        'date-picker': DatePicker,
         'vue-multiselect' : Multiselect
     },
     data(){
         return {
             lesson_materials: {
                 value: null,
-                options: ['Kek', 'lol']
-            }
+                options: null
+            },
+            lesson_date: null,
+            lesson_record: null,
+            lesson_number: null
         }
     },
+    props: ['course_id'],
     methods: {
         close() {
             this.$emit('close');
         },
         getLessonsMaterials(){
-            axios.post('api/courses/getLessonsMaterials', {}).then(res => {
+            axios.post('api/courses/getLessonsMaterials', {
+                course_id: this.course_id
+            }).then(res => {
                 this.lesson_materials.value = res.data.lesson_materials[0]
                 this.lesson_materials.options = res.data.lesson_materials
+            });
+        },
+        createLesson(){
+            axios.post('api/courses/createLesson',  {
+                course_id : this.course_id,
+                lesson_record : this.lesson_record,
+                lesson_number : this.lesson_number,
+                lesson_material : this.lesson_materials.value.id,
+                lesson_date : this.lesson_date
+            }).then(res => {
+                if (res.data.status === 'ok'){
+                    this.close()
+                }
             });
         }
     },
@@ -131,9 +161,8 @@ export default {
 }
 
 .modal-footer {
-    border-top: 1px solid #eeeeee;
-    flex-direction: column;
-    justify-content: flex-end;
+    border-top: 10px solid #eeeeee;
+    flex-direction: row;
 }
 
 .modal-body {
@@ -172,9 +201,9 @@ export default {
 }
 .modal{
     position: absolute;
-    left: 27%;
-    top: 20%;
-    width: 50%;
-    height: 50%;
+    left: 37%;
+    top: 25%;
+    width: 30%;
+    height: 60%;
 }
 </style>

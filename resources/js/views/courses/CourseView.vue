@@ -25,12 +25,15 @@
                         v-for="lesson in lessons"
                         v-bind:key="lesson.lesson_id"
                         :lesson = 'lesson'
+                        :course_id = course_id
+                        @update = "getLessonsByCourse"
                     ></lesson-view>
                 </div>
             </div>
         </div>
         </v-app>
         <create-lesson-modal
+            :course_id="course_id"
             v-show="isModalVisible"
             @close="closeModal">
         </create-lesson-modal>
@@ -80,6 +83,7 @@ export default {
         },
         closeModal(){
             this.isModalVisible = false
+            this.getLessonsByCourse()
         }
     },
     mounted() {
