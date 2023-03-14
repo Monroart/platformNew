@@ -10,6 +10,7 @@ export default {
     },
     actions: {
         startLoading({commit}){
+            console.log(1111)
             commit('SET_LOADING', true)
         },
         endLoading({commit}){

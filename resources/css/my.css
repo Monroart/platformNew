@@ -1,0 +1,15 @@
+.h-md-200px{
+    height: 70px !important;
+}
+.avatar-xxl{
+    width: 6rem;
+    height: 6rem;
+}
+p-0{
+    padding: 0px;
+}
+
+/* Адаптив для Profile */
+@media screen and (max-width: 1200px) {
+
+}

@@ -41,4 +41,5 @@ mix.js('resources/js/app.js', 'public/js')
         'resources/assets/vendor/stepper/css/bs-stepper.min.css',
         'resources/assets/vendor/tiny-slider/tiny-slider.css',
         'resources/assets/vendor/bootstrap-icons/bootstrap-icons.css',
+        'resources/css/my.css'
     ], 'public/css/app.css')

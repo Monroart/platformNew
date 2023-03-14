@@ -12,6 +12,8 @@ class TeacherSlot extends Model
     protected $fillable = [
         'teacher_id',
         'time',
-        'day_of_th_week',
+        'day_of_the_week',
+        'period_id',
+        'type'
     ];
 }
