@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" >
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/my.css') }}" rel="stylesheet">
     <link href="{{'vue-day-schedule/dist/VueDayScheduler.css'}}" rel="stylesheet">
 </head>
 <body>
