@@ -65,5 +65,6 @@ Route::group(['middleware'=>'auth:sanctum',  'prefix' => '/slots'], function (){
 
     Route::post('get', [\App\Http\Controllers\Slots\SlotsController::class, 'index']);
     Route::post('set', [\App\Http\Controllers\Slots\SlotsController::class, 'store']);
+    Route::get('courseList', [\App\Http\Controllers\Slots\SlotsController::class, 'getCourseList']);
 });
 

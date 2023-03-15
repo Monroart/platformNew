@@ -14,6 +14,7 @@ class TeacherSlot extends Model
         'time',
         'day_of_the_week',
         'period_id',
-        'type'
+        'type',
+        'course_id'
     ];
 }

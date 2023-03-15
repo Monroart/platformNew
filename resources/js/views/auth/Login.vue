@@ -166,9 +166,8 @@ export default {
                         this.endLoading();
                         this.$router.push('/');
                     }).catch(err => {
-                        this.endLoading();
-                        console.log(err.response)
                         this.endLoading()
+                        console.log(err.response)
                     })
                 })
                 this.$router.replace({

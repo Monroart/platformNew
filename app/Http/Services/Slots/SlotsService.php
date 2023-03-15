@@ -3,6 +3,7 @@
 namespace App\Http\Services\Slots;
 
 use App\Http\Services\Traits\ErrorReturnTrait;
+use App\Models\Course;
 use App\Models\SlotPeriods;
 use App\Models\TeacherSlot;
 
@@ -26,8 +27,9 @@ class SlotsService
             $slots = TeacherSlot::query()
                 ->from('teacher_slots AS ts')
                 ->leftJoin('slot_periods AS sp', 'ts.period_id', '=', 'sp.id')
+                ->leftJoin('courses AS c', 'c.id', '=', 'ts.course_id')
                 ->where('ts.teacher_id', $teacher_id)
-                ->select('sp.id AS period_id', 'sp.period', 'ts.day_of_the_week', 'ts.type')
+                ->select('sp.id AS period_id', 'sp.period', 'ts.day_of_the_week', 'ts.type', 'c.name AS course_name')
                 ->get();
 
             $periods = SlotPeriods::all();
@@ -48,26 +50,52 @@ class SlotsService
         try {
             switch ($slot['type']) {
                 case self::OPEN_TYPE:
-                    TeacherSlot::create([
-                        'teacher_id'      => $teacher_id,
-                        'day_of_the_week' => $slot['day'],
-                        'period_id'       => $slot['interval_id'],
-                        'type'            => self::OPEN_TYPE
-                    ]);
+                    TeacherSlot::updateOrCreate(
+                        [
+                            'teacher_id'      => $teacher_id,
+                            'day_of_the_week' => $slot['day'],
+                            'period_id'       => $slot['interval_id'],
+                        ],
+                        [
+                            'type'       => self::OPEN_TYPE,
+                            'subject_id' => 0,
+                            'course_id'  => 0
+                        ]
+                    );
                     break;
                 case self::CAN_TYPE:
-                    TeacherSlot::create([
+                    TeacherSlot::updateOrCreate(
+                        [
                         'teacher_id'      => $teacher_id,
                         'day_of_the_week' => $slot['day'],
                         'period_id'       => $slot['interval_id'],
-                        'type'            => self::CAN_TYPE
-                    ]);
+                        ],
+                        [
+                            'type'            => self::CAN_TYPE,
+                            'subject_id' => 0,
+                            'course_id'  => 0
+                        ]
+                    );
                     break;
                 case self::LESSON_TYPE:
-                    //tODO
+                    TeacherSlot::updateOrCreate(
+                        [
+                            'teacher_id'      => $teacher_id,
+                            'day_of_the_week' => $slot['day'],
+                            'period_id'       => $slot['interval_id'],
+                        ],
+                        [
+                            'type'            => self::LESSON_TYPE,
+                            'subject_id' => 0,
+                            'course_id'  => $slot['course_id']
+                        ]
+                    );
                     break;
                 case self::REMOVE_TYPE:
-                    //TODO
+                    TeacherSlot::where('teacher_id', $teacher_id)
+                        ->where('day_of_the_week', $slot['day'])
+                        ->where('period_id', $slot['interval_id'])
+                        ->delete();
                     break;
                 default:
                     return $this->returnError('Не верный тип');
@@ -78,6 +106,14 @@ class SlotsService
         } catch (\Exception $e) {
             return $this->returnError($e->getMessage());
         }
+    }
+
+    public function getCourseList(int $teacher_id)
+    {
+        return [
+            'status' => 'ok',
+            'courses' => Course::where('default_teacher_id', $teacher_id)->get()
+        ];
     }
 
 
