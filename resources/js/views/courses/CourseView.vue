@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-9">
+    <div :class="width >= '1200' ? 'col-md-9' : 'col-md-12'">
         <v-app
                id="inspire">
         <div class="card border mt-0">
@@ -55,6 +55,7 @@ export default {
     props: ['course_id', 'course_name', 'course_length'],
     data(){
         return {
+            width: window.innerWidth,
             lessons: null,
             value: 10,
             isModalVisible: false
@@ -91,6 +92,54 @@ export default {
     },
 }
 </script>
-<style scoped>
+<style lang="scss">
+.multiselect__tag {
+  color: #f1f1f1;
+  background-color: #066ac9;
+  font-size: 01rem;
+}
+.multiselect__tag:hover {
+  background-color: #ef476f;
+}
 
+.multiselect__option--disabled {
+  background: purple;
+  color: #066ac9;
+  font-style: italic;
+}
+
+.multiselect__option--highlight {
+  background-color: #066ac9;
+  color: #fff;
+  font-size: 0.9rem;
+  height: 1rem;
+}
+
+.multiselect__content {
+  background: rgb(255, 255, 255);
+  color: #444;
+  font-size: 0.9rem;
+}
+.multiselect__single {
+  height: 0.8rem;
+  font-size: 01rem;
+  color: #444;
+}
+.multiselect__tag {
+  position: relative;
+  display: inline-block;
+  padding: 0.25rem 1.625rem 0.25rem 0.625rem;
+
+  margin-right: 0.625rem;
+
+  line-height: 1;
+
+  margin-bottom: 0.5rem;
+}
+.multiselect__tag-icon:hover{
+  background-color: #ef476f;
+}
+.multiselect__tag-icon:after{
+  color: #ffffff;
+}
 </style>

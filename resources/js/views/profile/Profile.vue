@@ -1,5 +1,5 @@
 <template>
-    <div :class="width >= '1200' ? 'col-md-9' : 'col-md-12' " >
+    <div :class="width >= '1200' ? 'col-md-9' : 'col-md-12'" >
         <!-- Edit profile START -->
         <div class="card bg-transparent border rounded-3">
             <!-- Card header -->

@@ -7,7 +7,7 @@
 {{--                <Spinner class="loader" name="pacman" color="blue"></Spinner>--}}
                 <header-main></header-main>
                 <section class="pt-0">
-                    <div class="container">
+                    <div class="container-fluid">
                         <div class="row">
                             <sidebar></sidebar>
                             <router-view></router-view>
