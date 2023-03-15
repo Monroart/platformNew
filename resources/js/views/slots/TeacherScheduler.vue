@@ -51,43 +51,52 @@
                             aria-labelledby="dropdownMenuButton1"
                             ref="dropdown"
                           >
-                              <li class="dropdown-item text-center">
+                              <li v-if="!getSlot(number, interval.id) || (getSlot(number, interval.id) && getSlot(number, interval.id).type !== 'open')"
+                                  class="dropdown-item text-center"
+                              >
                                 <button
                                   @click="saveToSchedule(number, interval.id, 'open')"
-                                  class="btn btn-sm btn-blue-soft">
+                                  class="btn btn-sm btn-blue-soft"
+                                >
                                   Открыть слот
                                 </button>
                               </li>
 
-                              <li class="dropdown-item text-center">
+                              <li v-if="!getSlot(number, interval.id) || (getSlot(number, interval.id) && getSlot(number, interval.id).type !== 'can')"
+                                  class="dropdown-item text-center"
+                              >
                                 <button
                                   @click="saveToSchedule(number, interval.id, 'can')"
-                                  class="btn btn-sm btn-blue-soft">
+                                  class="btn btn-sm btn-blue-soft"
+                                >
                                   Готовность подменить
                                 </button>
                               </li>
 
                               <li v-if="showLessonMenu" class="dropdown-item text-center">
-                                <select class="form-select" aria-label="Default select example">
-                                  <option value="false" selected>Выберите курс</option>
-                                  <option value="1">One</option>
-                                  <option value="2">Two</option>
-                                  <option value="3">Three</option>
+                                <select v-model="selectedCourse" class="form-select" aria-label="Default select example">
+                                  <option v-for="course in courses" :value="course.id" :selected="selectedCourse">{{ course.name }}</option>
                                 </select>
                               </li>
 
-                              <li class="dropdown-item text-center">
+                              <li
+                                v-if="!getSlot(number, interval.id) || (getSlot(number, interval.id) && getSlot(number, interval.id).type !== 'lesson')"
+                                class="dropdown-item text-center"
+                              >
                                 <button v-if="!showLessonMenu" class="btn btn-sm btn-blue-soft" @click="showLessonMenu = true">
                                   Урок
                                 </button>
 
-                                <button v-if="showLessonMenu" class="btn btn-sm btn-blue-soft" @click="showLessonMenu = true">
+                                <button v-if="showLessonMenu" class="btn btn-sm btn-blue-soft" @click="saveToSchedule(number, interval.id, 'lesson')">
                                   Сохранить
                                 </button>
                               </li>
 
-                            <li class="dropdown-item text-center">
-                              <button class="btn btn-sm btn-warning">
+                            <li v-if="getSlot(number, interval.id)" class="dropdown-item text-center">
+                              <button
+                                @click="saveToSchedule(number, interval.id, 'remove')"
+                                class="btn btn-sm btn-warning"
+                              >
                                 Закрыть слот
                               </button>
                             </li>
@@ -122,6 +131,8 @@ export default {
             slots: [],
             showLessonMenu: false,
             hoverClass: '',
+            courses: null,
+            selectedCourse: null,
         }
     },
 
@@ -141,11 +152,12 @@ export default {
         this.showLessonMenu = false
         axios.post('api/slots/set', {
           slot: {
-            day, interval_id, type
+            day, interval_id, type, course_id: this.selectedCourse
           }
         })
 
         this.loadSlots()
+        this.selectedCourse = null
       },
 
       getSlot(day, period_id) {
@@ -172,17 +184,21 @@ export default {
         else if (slot.type === 'can')
           return 'Подхват'
         else if (slot.type === 'lesson') {
-          return 'Хз'
+          return slot.course_name
         }
+      },
 
-      }
-    },
-    created() {
-
+      loadCoursesList() {
+        axios.get('api/slots/courseList')
+          .then((res) => {
+            this.courses = res.data.courses
+          })
+      },
     },
 
     mounted() {
       this.loadSlots()
+      this.loadCoursesList()
     }
 }
 </script>
