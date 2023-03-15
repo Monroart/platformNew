@@ -18,6 +18,7 @@
     </main>
 </div>
 
+<style src="cxlt-vue2-toastr/dist/css/cxlt-vue2-toastr.css"></style>
 {{--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>--}}
 <script type="module" src="{{ asset('js/app.js') }}"></script>
 {{--<script type="module" src="{{ asset('js/aos.js') }}"></script>--}}

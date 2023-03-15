@@ -41,7 +41,9 @@
                                     </div>
                                 </div>
                                 <div class="mb-5">
-                                    <label v-if="students.values.length !== 0">Присутствующие</label>
+                                    <div v-if="students.values">
+                                      <label v-if="students.values.length !== 0">Присутствующие</label>
+                                    </div>
                                     <vue-multiselect selectedLabel="Выбран" deselectLabel="Убрать" placeholder="Добавьте присутствующих" v-model="students.values" :options="students.options" track-by="name" label = "name" :multiple="true" :taggable="true">
                                     </vue-multiselect>
                                 </div>
@@ -116,7 +118,7 @@ export default {
     data(){
         return {
             students: {
-                values:[],
+                values: null,
                 options: this.$store.getters["users/getByCourseId"](parseInt(this.course_id))
             }
         }
@@ -132,9 +134,11 @@ export default {
         }
     },
     watch:{
-        'students.values'(newValue){
-            const users = newValue.map(visit => visit.id)
-            this.addVisit(users);
+        'students.values'(newValue, oldValue){
+            if(oldValue != null){
+              const users = newValue.map(visit => visit.id)
+              this.addVisit(users);
+            }
         }
     },
     methods: {
@@ -143,8 +147,10 @@ export default {
                 lesson_id: lesson_id
             }).then(res => {
                 if(res.data.status === 'ok'){
+                  this.$toast.info('Урок удален', {
+                    position: 'bottom-right'
+                  })
                     this.$emit('update');
-                    console.log('ok')
                 }
             });
         },
@@ -164,19 +170,22 @@ export default {
             axios.post('api/lesson/visits/getLessonVisits', {
                 lesson_id: this.lesson.lesson_id
             }).then(res => {
-                if(res.data.status === 'ok' && res.data.visits.length > 0){
+                if(res.data.status === 'ok'){
+                  if(res.data.visits.length > 0){
                     const values = [];
-
                     res.data.visits.forEach(user_id =>{
-                        const res = this.$store.getters["users/getByCourseId"](parseInt(this.course_id)).find(user => {
-                            return user.id === user_id
-                        })
-                        if(res !== undefined){
-                            values.push(res)
-                        }
+                      const res = this.$store.getters["users/getByCourseId"](parseInt(this.course_id)).find(user => {
+                        return user.id === user_id
+                      })
+                      if(res !== undefined){
+                        values.push(res)
+                      }
                     })
-
                     this.students.values = values
+                  }
+                  else{
+                    this.students.values = []
+                  }
                 }
             })
         }

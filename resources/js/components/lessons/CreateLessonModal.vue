@@ -114,8 +114,16 @@ export default {
                 lesson_date : this.lesson_date
             }).then(res => {
                 if (res.data.status === 'ok'){
+                    this.$toast.success('Урок успешно создан', {
+                      position: 'bottom-right'
+                    })
                     this.close()
                 }
+                else if(res.data.status === 'error'){
+                  this.$toast.success(res.data.message, {
+                    position: 'bottom-right'
+                  })
+              }
             });
         }
     },

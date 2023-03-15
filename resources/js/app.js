@@ -39,15 +39,15 @@ import store from "./store";
 import Vuetify from './plugins/vuetify'
 import moment from 'moment'
 import Vuelidate from 'vuelidate'
-import 'vue2-datepicker/locale/ru';
-
 import VueMoment from 'vue-moment'
+import 'vue2-datepicker/locale/ru';
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-bootstrap.css';
 
 
 Vue.use(Vuelidate)
 Vue.use(VueMoment)
-
-
+Vue.use(VueToast);
 
 const app = new Vue({
     el: '#app',

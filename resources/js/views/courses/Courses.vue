@@ -43,9 +43,9 @@
 import moment from 'moment'
 import {getDayOfWeek} from "../../utils";
 import {mapActions} from "vuex";
+
 export default {
     name: "Courses",
-
     data(){
         return {
             courses: null,
